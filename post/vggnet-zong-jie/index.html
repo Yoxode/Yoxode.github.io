@@ -1,0 +1,124 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VGGNet总结 | Yoxode</title>
+<link rel="shortcut icon" href="https://Yoxode.github.io/favicon.ico">
+<link rel="stylesheet" href="https://Yoxode.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Yoxode.github.io">
+  <img class="avatar" src="https://Yoxode.github.io/images/avatar.png" alt="" width="80px" height="80px">
+  </a>
+  <h1 class="site-title">
+    Yoxode
+  </h1>
+  <p class="site-description">
+    Program myself.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+</div>
+
+      
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              VGGNet总结
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-03-01 ·
+              </time>
+              
+            </div>
+            <div class="post-content">
+              <p>关于VGGNet（VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION）</p>
+<!-- more -->
+
+<h1 id="vggnet简介">VGGNet简介</h1><p>VGG是<strong>Oxford</strong>的<strong>V</strong>isual <strong>G</strong>eometry <strong>G</strong>roup的组提出的（大家应该能看出VGG名字的由来了）。该网络是在<strong>ILSVRC 2014</strong>上的相关工作，主要工作是证明了<strong>增加网络的深度能够在一定程度上影响网络最终的性能</strong>。VGG有两种结构，分别是<strong>VGG16</strong>和<strong>VGG19</strong>，两者并<strong>没有本质上的区别</strong>，只是<strong>网络深度不一样</strong>。</p>
+<h1 id="vggnet结构">VGGNet结构</h1><p><img src="https://Yoxode.github.io/post-images/1551741930090.png" alt=""></p>
+<ul>
+<li>VGG16包含了16个隐藏层（13个卷积层和3个全连接层），如上图中的D列所示</li>
+<li>VGG19包含了19个隐藏层（16个卷积层和3个全连接层），如上图中的E列所示</li>
+<li>VGG网络的结构非常一致，从头到尾全部使用的是<strong>3x3</strong>的<strong>卷积</strong>和<strong>2x2</strong>的<strong>max pooling</strong>。<br>这里可以看到形象化的<a href="https://dgschwend.github.io/netscope/#/preset/vgg-16">VGG16</a></li>
+</ul>
+<h1 id="vggnet相比alexnet">VGGNet相比AlexNet</h1><p><img src="https://Yoxode.github.io/post-images/1551751759712.png" alt=""></p>
+<h2 id="1. vgg16相比alexnet的一个改进是采用连续的几个3x3的卷积核代替alexnet中的较大卷积核（11x11，7x7，5x5）">1. VGG16相比AlexNet的一个改进是采用连续的几个3x3的卷积核代替AlexNet中的较大卷积核（11x11，7x7，5x5）</h2><p>例如两个3x3代替5x5:<br><img src="https://Yoxode.github.io/post-images/1551751468450.png" alt=""></p>
+<h3 id="原因：">原因：</h3><ol>
+<li>在<strong>不改变网络功能的前提下</strong>极大地<strong>减少了参数个数</strong>。对于一层7X7的深度为1的卷积层变量总数为7X7=49，而对于三层3X3D的深度为1的卷积层变量总数仅仅为3X(3X3)=27，<strong>减少了近一半的参数量</strong>。</li>
+<li>采用<strong>更深</strong>的小卷积层将会在网络中加入更多的非线性激活函数ReLU，使<strong>模型的表示能力更强</strong>。</li>
+</ol>
+<h2 id="2. vggnet放弃了lrn层">2. VGGNet放弃了LRN层</h2><h1 id="vggnet的优缺点">VGGNet的优缺点</h1><h2 id="优点：">优点：</h2><ul>
+<li>VGGNet的结构非常简洁，整个网络都使用了同样大小的卷积核尺寸（3x3）和最大池化尺寸（2x2）</li>
+<li>几个小滤波器（3x3）卷积层的组合比一个大滤波器（5x5或7x7）卷积层好</li>
+<li>验证了通过不断加深网络结构可以提升性能</li>
+</ul>
+<h2 id="缺点：">缺点：</h2><ul>
+<li>VGG耗费更多计算资源，并且使用了更多的参数（这里不是3x3卷积的锅），导致更多的内存占用（140M）。其中绝大多数的参数都是来自于第一个全连接层。VGG可是有3个全连接层啊！</li>
+</ul>
+<p><a href="https://arxiv.org/pdf/1409.1556.pdf">VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION</a><br><a href="https://zhuanlan.zhihu.com/p/41423739">一文读懂VGG网络</a></p>
+
+            </div>
+          </article>
+        </div>
+    
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://Yoxode.github.io/post/alexnet-zong-jie">
+              <h3 class="post-title">
+                AlexNet总结
+              </h3>
+            </a>
+          </div>  
+        
+
+        
+    
+        <div class="site-footer">
+  Powered by yoxode.
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
