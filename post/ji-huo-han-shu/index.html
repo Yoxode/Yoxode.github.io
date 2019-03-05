@@ -1,0 +1,173 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>激活函数 | Yoxode</title>
+<link rel="shortcut icon" href="https://Yoxode.github.io/favicon.ico">
+<link rel="stylesheet" href="https://Yoxode.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Yoxode.github.io">
+  <img class="avatar" src="https://Yoxode.github.io/images/avatar.png" alt="" width="80px" height="80px">
+  </a>
+  <h1 class="site-title">
+    Yoxode
+  </h1>
+  <p class="site-description">
+    Program myself.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+</div>
+
+      
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              激活函数
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-03-04 ·
+              </time>
+              
+            </div>
+            <div class="post-content">
+              <p>激活函数总结</p>
+<!-- more -->
+<h1 id="什么是激活函数">什么是激活函数</h1><p>在多层神经网络中，上层节点的输出和下层节点的输入之间具有一个函数关系，这个函数称为激活函数（又称激励函数）。<br><img src="https://Yoxode.github.io/post-images/1551761746556.jpeg" alt=""></p>
+<h1 id="激活函数的用途">激活函数的用途</h1><p>如果不用激励函数（其实<strong>相当于激励函数是f(x) = x</strong>），在这种情况下你每一层节点的输入都是上层输出的<strong>线性函数</strong>。很容易验证，无论你神经网络有多少层，输出都是输入的线性组合，与没有隐藏层效果相当。这种情况就是最原始的<strong>感知机</strong>（Perceptron）了，那么网络的逼近能力就相当有限。正因为上面的原因，我们决定引入非线性函数作为激励函数，这样深层神经网络<strong>表达能力就更加强大</strong>（<strong>不再是输入的线性组合，而是几乎可以逼近任意函数</strong>）。</p>
+<h1 id="常见激活函数总结">常见激活函数总结</h1><h2 id="1. sigmoid">1. Sigmoid</h2><ol>
+<li>函数公式<br><img src="https://Yoxode.github.io/post-images/1551763044179.jpg" alt=""></li>
+<li>函数导数<br><img src="https://Yoxode.github.io/post-images/1551763097642.jpg" alt=""></li>
+<li>函数图像<br><img src="https://Yoxode.github.io/post-images/1551763209036.png" alt=""></li>
+<li>导数图像<br><img src="https://Yoxode.github.io/post-images/1551764383466.png" alt=""></li>
+<li>函数特性<ul>
+<li>当变量值远离中心轴时，<strong>梯度几乎为0</strong>，在神经网络的反向传播过程中，链式求导导致经过sigmoid函数之后的梯度很小，容易发生<strong>梯度消失</strong>（梯度弥散），导致权重值更新较慢甚至不更新</li>
+<li>Sigmoid的output<strong>不是0均值（即zero-centered）</strong>。这是不可取的，因为这会导致后一层的神经元将得到上一层输出的非0均值的信号作为输入。 产生的一个结果就是：如x&gt;0，那么对w求局部梯度则都为正，这样在反向传播的过程中w要么都往正方向更新，要么都往负方向更新，导致有一种捆绑的效果，使得<strong>收敛缓慢</strong>。 当然了，如果按batch去训练，那么那个batch可能得到不同的信号，所以这个问题还是可以缓解一下的。因此，非0均值这个问题虽然会产生一些不好的影响，不过跟上面提到的梯度消失问题相比还是要好很多的。</li>
+<li>计算机执行<strong>指数运算</strong>会比较<strong>慢</strong>，对于规模比较大的深度网络，这会较大地增加训练时间</li>
+</ul>
+</li>
+</ol>
+<h2 id="2. tanh（双曲正切函数）">2. Tanh（双曲正切函数）</h2><ol>
+<li>函数公式<br><img src="https://Yoxode.github.io/post-images/1551765419585.jpg" alt=""></li>
+<li>函数导数<br><img src="https://Yoxode.github.io/post-images/1551765488263.jpg" alt=""></li>
+<li>函数及导数图像<br><img src="https://Yoxode.github.io/post-images/1551765930353.png" alt=""></li>
+<li>函数特性<ul>
+<li>解决了Sigmoid函数的输出非0均值问题，SGD 会更接近 natural gradient（一种二次优化技术），从而降低所需的迭代次数，收敛速度加快</li>
+<li>和Sigmoid一样具有软饱和性，容易发生梯度消失</li>
+</ul>
+</li>
+</ol>
+<h2 id="3. relu（线性整流函数-rectified linear unit，又称修正线性单元）">3. ReLU（线性整流函数-Rectified Linear Unit，又称修正线性单元）</h2><ol>
+<li><p>函数公式<br><img src="https://Yoxode.github.io/post-images/1551766472584.png" alt=""></p>
+</li>
+<li><p>函数及导数图像<br><img src="https://Yoxode.github.io/post-images/1551766508668.png" alt=""></p>
+</li>
+<li><p>特性</p>
+<ul>
+<li><strong>解决了梯度消失</strong>（gradient vanishing）问题 (在正区间)</li>
+<li><strong>计算速度非常快</strong>，只需要判断输入是否大于0</li>
+<li><strong>收敛速度远快于</strong>sigmoid和tanh</li>
+<li>ReLU会使一部分神经元的输出为0，这样就造成了网络的稀疏性，并且减少了参数的相互依存关系，缓解了过拟合问题的发生</li>
+<li>ReLU的输出<strong>不是zero-centered</strong></li>
+<li><strong>Dead ReLU Problem</strong>，由于负区间值始终为0，某些神经元可能永远不会被激活，导致相应的参数永远不能被更新，产生原因:<br>(1) 非常不幸的参数初始化，这种情况比较少见<br>(2) learning rate太<strong>高</strong>导致在训练过程中参数更新太大，不幸使网络进入这种状态<br>解决方法是可以采用<strong>Xavier初始化</strong>方法，以及避免将learning rate设置太大或使用adagrad等自动调节learning rate的算法。</li>
+</ul>
+<h5 id="尽管存在这两个问题，relu目前仍是最常用的activation function，在搭建人工神经网络的时候推荐优先尝试！">尽管存在这两个问题，ReLU目前仍是最常用的activation function，在搭建人工神经网络的时候推荐优先尝试！</h5></li>
+</ol>
+<h2 id="4. leaky relu(带泄露线性整流-parameter relu-p relu)">4. Leaky ReLU(带泄露线性整流-Parameter ReLU-P ReLU)</h2><ol>
+<li>函数公式<br><img src="https://Yoxode.github.io/post-images/1551767645519.png" alt=""></li>
+<li>函数及导数图像<br><img src="https://Yoxode.github.io/post-images/1551767660875.png" alt=""></li>
+<li>特性<ul>
+<li>人们为了<strong>解决Dead ReLU Problem</strong>，提出了将ReLU的前半段设为αx而非0，通常α=0.01。</li>
+<li>理论上来讲，Leaky ReLU有ReLU的所有优点，外加<strong>不会有Dead ReLu</strong>问题，但是在实际操作当中，<strong>并没有完全证明Leaky ReLU总是好于ReLU</strong>。</li>
+</ul>
+</li>
+</ol>
+<h2 id="5. elu（exponential linear units）">5. ELU（Exponential Linear Units）</h2><ol>
+<li>函数公式<br><img src="https://Yoxode.github.io/post-images/1551768103327.png" alt=""></li>
+<li>函数及导数图像<br><img src="https://Yoxode.github.io/post-images/1551768130376.png" alt=""></li>
+<li>特性<ul>
+<li>ELU也是为解决ReLU存在的问题而提出，显然，ELU<strong>有ReLU的基本所有优点</strong></li>
+<li><strong>不会有Dead ReLU</strong>问题</li>
+<li>输出的均值接近0，<strong>zero-centered</strong></li>
+<li>它的一个小问题在于<strong>计算量稍大</strong>。类似于Leaky ReLU，理论上虽然好于ReLU，<strong>但在实际使用中目前并没有好的证据ELU总是优于ReLU</strong>。</li>
+</ul>
+</li>
+</ol>
+<h2 id="6. selu（缩放指数线性单元-scaled exponential linear units）">6. SeLU（缩放指数线性单元-Scaled Exponential Linear Units）</h2><ol>
+<li>函数公式<br><img src="https://Yoxode.github.io/post-images/1551768620298.png" alt=""><br>其中α和λ的值是通过证明得到而不是训练得到的<br><strong>α = 1.6732632423543772848170429916717</strong><br><strong>λ = 1.0507009873554804934193349852946</strong></li>
+<li>函数图像<br><img src="https://Yoxode.github.io/post-images/1551768634779.png" alt=""></li>
+<li>特性<ul>
+<li>经过该激活函数后使得样本分布自动归一化到0均值和单位方差</li>
+</ul>
+</li>
+</ol>
+<h2 id="7. maxout">7. MaxOut</h2><ol>
+<li>函数公式<br><img src="https://Yoxode.github.io/post-images/1551769573481.png" alt=""></li>
+</ol>
+<p>参考：<br><a href="https://blog.csdn.net/tyhj_sf/article/details/79932893">常用激活函数（激励函数）理解与总结</a><br><a href="https://arxiv.org/pdf/1706.02515.pdf">Self-Normalizing Neural Networks</a><br><a href="https://arxiv.org/pdf/1302.4389.pdf">Maxout Networks</a></p>
+
+            </div>
+          </article>
+        </div>
+    
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://Yoxode.github.io/post/vggnet-zong-jie">
+              <h3 class="post-title">
+                VGGNet总结
+              </h3>
+            </a>
+          </div>  
+        
+
+        
+    
+        <div class="site-footer">
+  Powered by yoxode.
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
