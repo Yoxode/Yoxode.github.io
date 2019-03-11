@@ -1,0 +1,163 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>链表总结（Python） | Yoxode</title>
+<link rel="shortcut icon" href="https://Yoxode.github.io/favicon.ico">
+<link rel="stylesheet" href="https://Yoxode.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Yoxode.github.io">
+  <img class="avatar" src="https://Yoxode.github.io/images/avatar.png" alt="" width="80px" height="80px">
+  </a>
+  <h1 class="site-title">
+    Yoxode
+  </h1>
+  <p class="site-description">
+    Program myself.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+</div>
+
+      
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              链表总结（Python）
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-03-10 ·
+              </time>
+              
+            </div>
+            <div class="post-content">
+              <p>链表的结构以及相关题目</p>
+<!-- more -->
+<h1 id="1. 链表翻转类">1. 链表翻转类</h1><h2 id="a. 206. reverse linked list (easy)">a. <a href="https://leetcode.com/problems/reverse-linked-list/">206. Reverse Linked List (Easy)</a></h2><blockquote>
+<p>Reverse a singly linked list.<br>Example:<br>Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL<br>Output: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL<br>Follow up:<br>A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
+</blockquote>
+<ol>
+<li>思路<br><img src="https://Yoxode.github.io/post-images/1552274300466.png" alt=""><br>核心步骤：<blockquote>
+<p>next = cur.next<br>cur.next = pre<br>pre = cur<br>cur = next</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="https://Yoxode.github.io/post-images/1552274805449.png" alt=""></p>
+<ol start="2">
+<li>代码<pre><code>class Solution(object):
+ def reverseList(self, head):
+     &quot;&quot;&quot;
+     :type head: ListNode
+     :rtype: ListNode
+     &quot;&quot;&quot;
+     pre = None
+     cur = head
+     while cur:
+         _next = cur.next
+         cur.next = pre
+         pre = cur
+         cur = _next
+     return pre</code></pre></li>
+</ol>
+<h2 id="b. 92. reverse linked list ii (medium)">b. <a href="https://leetcode.com/problems/reverse-linked-list-ii/">92. Reverse Linked List II (Medium)</a></h2><blockquote>
+<p>Reverse a linked list from position m to n. Do it in one-pass.<br>Note: 1 ≤ m ≤ n ≤ length of list.<br>Example:<br>Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, m = 2, n = 4<br>Output: 1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL</p>
+</blockquote>
+<ol>
+<li>思路<br>a. 创建dummy节点的目的是让边界情况能像非边界情况一样方便处理。（如果m=1，mnode就是第一个节点，此时如果没有dummy节点那么pre节点就为空。<br> b. 通过设定的i递增找到pre节点，m节点，n节点<br><img src="https://Yoxode.github.io/post-images/1552279752422.png" alt=""><br>c. 找到相应的节点之后就是整个算法的核心：当mnode和nnode没有重合之前，将mnode移到nnode后面，然后令mnode为之前mnode的下一个节点<br><img src="https://Yoxode.github.io/post-images/1552280532356.png" alt=""><br>d. 当mnode和nnode重合时，对应部分的链表就翻转成功了</li>
+<li>代码<pre><code>class Solution(object):
+ def reverseBetween(self, head, m, n):
+     &quot;&quot;&quot;
+     :type head: ListNode
+     :type m: int
+     :type n: int
+     :rtype: ListNode
+     &quot;&quot;&quot;
+     if not head or not head.next:
+         return head
+     dummy = ListNode(0)
+     dummy.next = head
+     mnode = head
+     nnode = head
+     pre = dummy
+     i = 1
+     while i &lt;= n:
+         if i &lt; m:
+             mnode = mnode.next
+             pre = pre.next
+         if i &lt; n:
+             nnode = nnode.next
+         i += 1
+     while(mnode != nnode):
+         pre.next = mnode.next
+         mnode.next = nnode.next
+         nnode.next = mnode
+         mnode = pre.next
+         mnode = pre.next
+     return dummy.next</code></pre></li>
+</ol>
+
+            </div>
+          </article>
+        </div>
+    
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://Yoxode.github.io/post/ji-huo-han-shu">
+              <h3 class="post-title">
+                激活函数
+              </h3>
+            </a>
+          </div>  
+        
+
+        
+    
+        <div class="site-footer">
+  Powered by yoxode.
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
