@@ -62,7 +62,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-03-07 ·
+                · 2019-03-05 ·
               </time>
               
             </div>
@@ -134,6 +134,17 @@
 <h2 id="c. 61. rotate list">c. <a href="https://leetcode.com/problems/rotate-list/">61. Rotate List</a></h2><blockquote>
 <p>Given a linked list, rotate the list to the right by k places, where k is non-negative.<br><strong>Example 1:</strong><br>Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, k = 2<br>Output: 4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL<br><strong>Explanation:</strong><br>rotate 1 steps to the right: 5-&gt;1-&gt;2-&gt;3-&gt;4-&gt;NULL<br>rotate 2 steps to the right: 4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL<br><strong>Example 2:</strong><br>Input: 0-&gt;1-&gt;2-&gt;NULL, k = 4<br>Output: 2-&gt;0-&gt;1-&gt;NULL<br><strong>Explanation:</strong><br>rotate 1 steps to the right: 2-&gt;0-&gt;1-&gt;NULL<br>rotate 2 steps to the right: 1-&gt;2-&gt;0-&gt;NULL<br>rotate 3 steps to the right: 0-&gt;1-&gt;2-&gt;NULL<br>rotate 4 steps to the right: 2-&gt;0-&gt;1-&gt;NULL</p>
 </blockquote>
+<ol>
+<li><p>思路<br>a. 题目意思是将尾节点翻转到头结点k（k = 2）次<br><img src="https://Yoxode.github.io/post-images/1552352638924.png" alt=""><br>b. 如果直接按题意将尾节点翻转到头结点的话，每次需要知道该尾节点的pre节点，但是pre节点无法像next节点一样直接获得，所以这时转变一下思路，将“尾节点翻转到头结点k次”转换为“将头结点翻转到尾节点(n - k)次”（n为链表长度）。<br><img src="https://Yoxode.github.io/post-images/1552352817190.png" alt=""><br>c. 将头结点翻转到尾节点的过程：<br><img src="https://Yoxode.github.io/post-images/1552353930430.png" alt=""></p>
+<blockquote>
+<pre><code>head = head.next
+tail.next = cur
+tail = cur
+cur.next = None
+cur = head</code></pre></blockquote>
+<p><img src="https://Yoxode.github.io/post-images/1552353993069.png" alt=""></p>
+</li>
+</ol>
 
             </div>
           </article>
