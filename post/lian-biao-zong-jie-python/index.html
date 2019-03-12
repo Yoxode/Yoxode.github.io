@@ -62,7 +62,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-03-05 ·
+                · 2019-03-10 ·
               </time>
               
             </div>
@@ -143,6 +143,30 @@ tail = cur
 cur.next = None
 cur = head</code></pre></blockquote>
 <p><img src="https://Yoxode.github.io/post-images/1552353993069.png" alt=""></p>
+<ol start="2">
+<li>代码<pre><code>class Solution(object):
+ def rotateRight(self, head, k):
+ &quot;&quot;&quot;
+ :type head: ListNode
+ :type k: int
+ :rtype: ListNode
+ &quot;&quot;&quot;
+ if not head or not head.next: return head
+ n = 1
+ tail = head
+ while(tail.next):
+                 tail = tail.next
+     n += 1
+ print(n)
+ cur = head
+ for i in range(n - (k % n)):
+     head = head.next
+     tail.next = cur
+     tail = cur
+     cur.next = None
+     cur = head
+ return head</code></pre></li>
+</ol>
 </li>
 </ol>
 
@@ -153,9 +177,9 @@ cur = head</code></pre></blockquote>
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://Yoxode.github.io/post/ji-huo-han-shu">
+            <a href="https://Yoxode.github.io/post/leetcode-92-reverse-linked-list-ii">
               <h3 class="post-title">
-                激活函数
+                Leetcode-92-Reverse Linked List II
               </h3>
             </a>
           </div>  
