@@ -1,0 +1,120 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Leetcode-206-Reverse Linked List | Yoxode</title>
+<link rel="shortcut icon" href="https://Yoxode.github.io/favicon.ico">
+<link rel="stylesheet" href="https://Yoxode.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Yoxode.github.io">
+  <img class="avatar" src="https://Yoxode.github.io/images/avatar.png" alt="" width="80px" height="80px">
+  </a>
+  <h1 class="site-title">
+    Yoxode
+  </h1>
+  <p class="site-description">
+    Program myself.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+</div>
+
+      
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Leetcode-206-Reverse Linked List
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-03-09 ·
+              </time>
+              
+            </div>
+            <div class="post-content">
+              <h1 id="206. reverse linked list (easy)"><a href="https://leetcode.com/problems/reverse-linked-list/">206. Reverse Linked List (Easy)</a></h1><blockquote>
+<p>Reverse a singly linked list.<br>Example:<br>Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL<br>Output: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL<br>Follow up:<br>A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
+</blockquote>
+<h2 id="1. 思路">1. 思路</h2><p><img src="https://Yoxode.github.io/post-images/1552274300466.png" alt=""><br>核心步骤：</p>
+<blockquote>
+<p>next = cur.next<br>cur.next = pre<br>pre = cur<br>cur = next</p>
+</blockquote>
+<p><img src="https://Yoxode.github.io/post-images/1552274805449.png" alt=""></p>
+<h2 id="2. 代码">2. 代码</h2><pre><code>class Solution(object):
+    def reverseList(self, head):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :rtype: ListNode
+        &quot;&quot;&quot;
+        pre = None
+        cur = head
+        while cur:
+            _next = cur.next
+            cur.next = pre
+            pre = cur
+            cur = _next
+        return pre</code></pre>
+            </div>
+          </article>
+        </div>
+    
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://Yoxode.github.io/post/lian-biao-zong-jie-python">
+              <h3 class="post-title">
+                链表总结（Python）
+              </h3>
+            </a>
+          </div>  
+        
+
+        
+    
+        <div class="site-footer">
+  Powered by yoxode.
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
