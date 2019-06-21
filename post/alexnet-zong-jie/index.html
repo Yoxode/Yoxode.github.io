@@ -62,7 +62,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-02-18 ·
+                · 2019-02-19 ·
               </time>
               
                 <a href="https://Yoxode.github.io/tag/DL" class="post-tags">
@@ -77,26 +77,55 @@
             <div class="post-content">
               <p>关于AlexNet</p>
 <!-- more -->
-<h1 id="alexnet 简要介绍">AlexNet 简要介绍</h1><p>AlexNet由<strong>Alex Krizhevsky</strong>于<strong>2012</strong>年提出，夺得2012年<strong>ILSVRC比赛的冠军</strong>，top5预测的错误率为<strong>16.4%</strong>，远超第一名。AlexNet采用8层的神经网络，<strong>5个卷积层</strong>和<strong>3个全连接层</strong>(3个卷积层后面加了最大池化层)，包含6亿3000万个链接，6000万个 参数和65万个神经元。</p>
-<h1 id="alexnet模型结构">AlexNet模型结构</h1><p>论文中的模型图：<br><img src="https://Yoxode.github.io/post-images/1551647686153.jpg" alt=""><br>这里论文模型图有一个错误，就是AlexNet的输入层实际上是227*227的，但是图片里面是224*224的。我们看下面一张图，会更加清晰一点：<br><img src="https://Yoxode.github.io/post-images/1551647907609.jpeg" alt=""><br>卷积层参数量（池化层参数为0）：<br><img src="https://Yoxode.github.io/post-images/1551648480484.jpeg" alt=""><br>全连接层参数量：<br><img src="https://Yoxode.github.io/post-images/1551648519198.jpeg" alt=""></p>
-<h1 id="alexnet相比传统cnn（如lenet）的创新点">AlexNet相比传统CNN（如LeNet）的创新点</h1><h2 id="1. data augmentation（数据增强）">1. Data Augmentation（数据增强）</h2><p>常见的数据增强方法有：</p>
+<h1 id="alexnet-简要介绍">AlexNet 简要介绍</h1>
+<p>AlexNet由<strong>Alex Krizhevsky</strong>于<strong>2012</strong>年提出，夺得2012年<strong>ILSVRC比赛的冠军</strong>，top5预测的错误率为<strong>16.4%</strong>，远超第一名。AlexNet采用8层的神经网络，<strong>5个卷积层</strong>和<strong>3个全连接层</strong>(3个卷积层后面加了最大池化层)，包含6亿3000万个链接，6000万个 参数和65万个神经元。</p>
+<h1 id="alexnet模型结构">AlexNet模型结构</h1>
+<p>论文中的模型图：
+<img src="https://Yoxode.github.io/post-images/1551647686153.jpg" alt="">
+这里论文模型图有一个错误，就是AlexNet的输入层实际上是227*227的，但是图片里面是224*224的。我们看下面一张图，会更加清晰一点：
+<img src="https://Yoxode.github.io/post-images/1551647907609.jpeg" alt="">
+卷积层参数量（池化层参数为0）：
+<img src="https://Yoxode.github.io/post-images/1551648480484.jpeg" alt="">
+全连接层参数量：
+<img src="https://Yoxode.github.io/post-images/1551648519198.jpeg" alt=""></p>
+<h1 id="alexnet相比传统cnn如lenet的创新点">AlexNet相比传统CNN（如LeNet）的创新点</h1>
+<h2 id="1-data-augmentation数据增强">1. Data Augmentation（数据增强）</h2>
+<p>常见的数据增强方法有：</p>
 <ul>
-<li>水平翻转：<br><img src="https://Yoxode.github.io/post-images/1551650681749.png" alt=""></li>
-<li>随机裁剪、平移变换<br><img src="https://Yoxode.github.io/post-images/1551650711663.png" alt=""></li>
-<li>颜色、光照变换<br><img src="https://Yoxode.github.io/post-images/1551650734615.png" alt=""><h2 id="2. 使用relu非线性激活函数">2. 使用ReLu非线性激活函数</h2>ReLu 函数公式：<em>f(x) = max(0, x)</em><br>ReLu 函数图形：<br><img src="https://Yoxode.github.io/post-images/1551651017993.png" alt=""></li>
+<li>水平翻转：
+<img src="https://Yoxode.github.io/post-images/1551650681749.png" alt=""></li>
+<li>随机裁剪、平移变换
+<img src="https://Yoxode.github.io/post-images/1551650711663.png" alt=""></li>
+<li>颜色、光照变换
+<img src="https://Yoxode.github.io/post-images/1551650734615.png" alt=""></li>
 </ul>
+<h2 id="2-使用relu非线性激活函数">2. 使用ReLu非线性激活函数</h2>
+<p>ReLu 函数公式：<em>f(x) = max(0, x)</em>
+ReLu 函数图形：
+<img src="https://Yoxode.github.io/post-images/1551651017993.png" alt=""></p>
 <p><strong>用ReLU函数代替了传统的Tanh或者Sigmoid函数。好处有：</strong></p>
 <ul>
 <li>计算速度快。ReLu前向计算非常简单，无需指数类的操作；ReLu的反向传播计算（偏导）也很简单。</li>
 <li>不容易发生梯度消失（梯度弥散）问题。Tanh和Sigmoid激活函数在两端的时候导数接近于0，多级连乘后梯度趋近于0，会导致梯度消失，而ReLu防止了这个问题，因此可以训练更深的网络。</li>
-<li>稀疏性。ReLu函数在输入小于0的时候是处于不激活状态的，从而使一部分隐藏层的输出为0，于是网络变得更加稀疏，起到了类似于L1正则化的作用，在一定程度上防止了过拟合。<h2 id="3. dropout（只在最后几个全连接层做）">3. Dropout（只在最后几个全连接层做）</h2><img src="https://Yoxode.github.io/post-images/1551651730077.gif" alt=""></li>
+<li>稀疏性。ReLu函数在输入小于0的时候是处于不激活状态的，从而使一部分隐藏层的输出为0，于是网络变得更加稀疏，起到了类似于L1正则化的作用，在一定程度上防止了过拟合。</li>
 </ul>
+<h2 id="3-dropout只在最后几个全连接层做">3. Dropout（只在最后几个全连接层做）</h2>
+<p><img src="https://Yoxode.github.io/post-images/1551651730077.gif" alt=""></p>
 <p><strong>为什么Dropout有效？</strong></p>
 <p>Dropout背后理念和集成模型很相似。在Drpout层，不同的神经元组合被关闭，这代表了一种不同的结构，所有这些不同的结构使用一个的子数据集并行地带权重训练，而权重总和为1。如果Dropout层有n个神经元，那么会形成 2^{n} 个不同的子结构。在预测时，相当于集成这些模型并取均值。这种结构化的模型正则化技术有利于避免过拟合。Dropout有效的另外一个视点是：由于神经元是随机选择的，所以可以减少神经元之间的相互依赖，从而确保提取出相互独立的重要特征。</p>
-<h2 id="4. overlapping pooling（重叠池化）">4. Overlapping Pooling（重叠池化）</h2><p>根据模型图可以看到，在第一、二、五个卷积层后都有一个Overlapping的MaxPool层。<br>Overlapping指重叠，即Pooling的步长比Pooling Kernel的对应边要小（比如这里池化层的size为3，而步长为2）。<br>这个策略贡献了0.3%的Top-5错误率。</p>
-<h2 id="5. 多gpu并行">5. 多GPU并行</h2><p>原论文中将输入分为两部分在两个GPU上并行</p>
-<h2 id="6. local response normalization（局部响应归一化）">6. Local Response Normalization（局部响应归一化）</h2><p><img src="https://Yoxode.github.io/post-images/1551653920708.png" alt=""><br>(在2015年 Very Deep Convolutional Networks for Large-Scale Image Recognition.提到LRN基本没什么用)</p>
-<p>参考文章：<br><a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">ImageNet Classification with Deep Convolutional Neural Networks</a><br><a href="https://blog.csdn.net/haluoluo211/article/details/81636890">Alexnet总结/论文笔记</a><br><a href="https://zhuanlan.zhihu.com/p/22094600">[原创]#Deep Learning回顾#之LeNet、AlexNet、GoogLeNet、VGG、ResNet</a></p>
+<h2 id="4-overlapping-pooling重叠池化">4. Overlapping Pooling（重叠池化）</h2>
+<p>根据模型图可以看到，在第一、二、五个卷积层后都有一个Overlapping的MaxPool层。
+Overlapping指重叠，即Pooling的步长比Pooling Kernel的对应边要小（比如这里池化层的size为3，而步长为2）。
+这个策略贡献了0.3%的Top-5错误率。</p>
+<h2 id="5-多gpu并行">5. 多GPU并行</h2>
+<p>原论文中将输入分为两部分在两个GPU上并行</p>
+<h2 id="6-local-response-normalization局部响应归一化">6. Local Response Normalization（局部响应归一化）</h2>
+<p><img src="https://Yoxode.github.io/post-images/1551653920708.png" alt="">
+(在2015年 Very Deep Convolutional Networks for Large-Scale Image Recognition.提到LRN基本没什么用)</p>
+<p>参考文章：
+<a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">ImageNet Classification with Deep Convolutional Neural Networks</a>
+<a href="https://blog.csdn.net/haluoluo211/article/details/81636890">Alexnet总结/论文笔记</a>
+<a href="https://zhuanlan.zhihu.com/p/22094600">[原创]#Deep Learning回顾#之LeNet、AlexNet、GoogLeNet、VGG、ResNet</a></p>
 
             </div>
           </article>

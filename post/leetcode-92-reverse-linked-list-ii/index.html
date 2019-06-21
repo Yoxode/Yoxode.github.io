@@ -62,16 +62,28 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-03-10 ·
+                · 2019-03-11 ·
               </time>
               
             </div>
             <div class="post-content">
-              <h1 id="b. 92. reverse linked list ii (medium)">b. <a href="https://leetcode.com/problems/reverse-linked-list-ii/">92. Reverse Linked List II (Medium)</a></h1><blockquote>
-<p>Reverse a linked list from position m to n. Do it in one-pass.<br>Note: 1 ≤ m ≤ n ≤ length of list.<br>Example:<br>Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, m = 2, n = 4<br>Output: 1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL</p>
+              <h1 id="b-92-reverse-linked-list-ii-medium">b. <a href="https://leetcode.com/problems/reverse-linked-list-ii/">92. Reverse Linked List II (Medium)</a></h1>
+<blockquote>
+<p>Reverse a linked list from position m to n. Do it in one-pass.
+Note: 1 ≤ m ≤ n ≤ length of list.
+Example:
+Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, m = 2, n = 4
+Output: 1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL</p>
 </blockquote>
-<h2 id="1. 思路">1. 思路</h2><p>  a. 创建dummy节点的目的是让边界情况能像非边界情况一样方便处理。（如果m=1，mnode就是第一个节点，此时如果没有dummy节点那么pre节点就为空。<br>    b. 通过设定的i递增找到pre节点，m节点，n节点<br><img src="https://Yoxode.github.io/post-images/1552279752422.png" alt=""><br> c. 找到相应的节点之后就是整个算法的核心：当mnode和nnode没有重合之前，将mnode移到nnode后面，然后令mnode为之前mnode的下一个节点<br> <img src="https://Yoxode.github.io/post-images/1552280532356.png" alt=""><br> d. 当mnode和nnode重合时，对应部分的链表就翻转成功了</p>
-<h2 id="2. 代码">2. 代码</h2><pre><code>class Solution(object):
+<h2 id="1-思路">1. 思路</h2>
+<p>a. 创建dummy节点的目的是让边界情况能像非边界情况一样方便处理。（如果m=1，mnode就是第一个节点，此时如果没有dummy节点那么pre节点就为空。
+b. 通过设定的i递增找到pre节点，m节点，n节点
+<img src="https://Yoxode.github.io/post-images/1552279752422.png" alt="">
+c. 找到相应的节点之后就是整个算法的核心：当mnode和nnode没有重合之前，将mnode移到nnode后面，然后令mnode为之前mnode的下一个节点
+<img src="https://Yoxode.github.io/post-images/1552280532356.png" alt="">
+d. 当mnode和nnode重合时，对应部分的链表就翻转成功了</p>
+<h2 id="2-代码">2. 代码</h2>
+<pre><code>class Solution(object):
     def reverseBetween(self, head, m, n):
         &quot;&quot;&quot;
         :type head: ListNode
@@ -100,7 +112,9 @@
             nnode.next = mnode
             mnode = pre.next
             mnode = pre.next
-        return dummy.next</code></pre>
+        return dummy.next
+</code></pre>
+
             </div>
           </article>
         </div>

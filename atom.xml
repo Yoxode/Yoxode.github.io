@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://Yoxode.github.io</id>
+    <title>Yoxode</title>
+    <updated>2019-06-21T10:16:07.178Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://Yoxode.github.io"/>
+    <link rel="self" href="https://Yoxode.github.io/atom.xml"/>
+    <subtitle>Program myself.</subtitle>
+    <logo>https://Yoxode.github.io/images/avatar.png</logo>
+    <icon>https://Yoxode.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2019, Yoxode</rights>
+    <entry>
+        <title type="html"><![CDATA[Logistic Regression]]></title>
+        <id>https://Yoxode.github.io/post/logistic-regression</id>
+        <link href="https://Yoxode.github.io/post/logistic-regression">
+        </link>
+        <updated>2019-05-22T09:33:06.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="http://www.cnblogs.com/ModifyRong/p/7739955.html">逻辑回归的常见面试点总结</a>
+<a href="https://blog.csdn.net/lazyGril_81/article/details/80629199">机器学习算法之Logistic regression (逻辑回归)详解</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[AUC&ROC]]></title>
+        <id>https://Yoxode.github.io/post/aucandroc</id>
+        <link href="https://Yoxode.github.io/post/aucandroc">
+        </link>
+        <updated>2019-03-14T01:34:30.000Z</updated>
+        <content type="html"><![CDATA[<p>参考：
+<a href="https://blog.csdn.net/shenxiaoming77/article/details/72627882">ROC与AUC的定义与使用详解</a>
+<a href="https://blog.csdn.net/u013385925/article/details/80385873">AUC，ROC我看到的最透彻的讲解</a>
+<a href="https://www.cnblogs.com/sddai/p/8360089.html">ROC和AUC介绍以及如何计算AUC</a>
+<a href="https://www.jianshu.com/p/82903edb58dc">让你彻底记住什么是ROC/AUC</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-92-Reverse Linked List II]]></title>
+        <id>https://Yoxode.github.io/post/leetcode-92-reverse-linked-list-ii</id>
+        <link href="https://Yoxode.github.io/post/leetcode-92-reverse-linked-list-ii">
+        </link>
+        <updated>2019-03-10T21:19:03.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="b-92-reverse-linked-list-ii-medium">b. <a href="https://leetcode.com/problems/reverse-linked-list-ii/">92. Reverse Linked List II (Medium)</a></h1>
+<blockquote>
+<p>Reverse a linked list from position m to n. Do it in one-pass.
+Note: 1 ≤ m ≤ n ≤ length of list.
+Example:
+Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, m = 2, n = 4
+Output: 1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL</p>
+</blockquote>
+<h2 id="1-思路">1. 思路</h2>
+<p>a. 创建dummy节点的目的是让边界情况能像非边界情况一样方便处理。（如果m=1，mnode就是第一个节点，此时如果没有dummy节点那么pre节点就为空。
+b. 通过设定的i递增找到pre节点，m节点，n节点
+<img src="https://Yoxode.github.io/post-images/1552279752422.png" alt="">
+c. 找到相应的节点之后就是整个算法的核心：当mnode和nnode没有重合之前，将mnode移到nnode后面，然后令mnode为之前mnode的下一个节点
+<img src="https://Yoxode.github.io/post-images/1552280532356.png" alt="">
+d. 当mnode和nnode重合时，对应部分的链表就翻转成功了</p>
+<h2 id="2-代码">2. 代码</h2>
+<pre><code>class Solution(object):
+    def reverseBetween(self, head, m, n):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :type m: int
+        :type n: int
+        :rtype: ListNode
+        &quot;&quot;&quot;
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        mnode = head
+        nnode = head
+        pre = dummy
+        i = 1
+        while i &lt;= n:
+            if i &lt; m:
+                mnode = mnode.next
+                pre = pre.next
+            if i &lt; n:
+                nnode = nnode.next
+            i += 1
+        while(mnode != nnode):
+            pre.next = mnode.next
+            mnode.next = nnode.next
+            nnode.next = mnode
+            mnode = pre.next
+            mnode = pre.next
+        return dummy.next
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-61-Rotate List]]></title>
+        <id>https://Yoxode.github.io/post/leetcode-61-rotate-list</id>
+        <link href="https://Yoxode.github.io/post/leetcode-61-rotate-list">
+        </link>
+        <updated>2019-03-10T08:20:02.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="c-61-rotate-list">c. <a href="https://leetcode.com/problems/rotate-list/">61. Rotate List</a></h1>
+<blockquote>
+<p>Given a linked list, rotate the list to the right by k places, where k is non-negative.
+<strong>Example 1:</strong>
+Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, k = 2
+Output: 4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL
+<strong>Explanation:</strong>
+rotate 1 steps to the right: 5-&gt;1-&gt;2-&gt;3-&gt;4-&gt;NULL
+rotate 2 steps to the right: 4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL
+<strong>Example 2:</strong>
+Input: 0-&gt;1-&gt;2-&gt;NULL, k = 4
+Output: 2-&gt;0-&gt;1-&gt;NULL
+<strong>Explanation:</strong>
+rotate 1 steps to the right: 2-&gt;0-&gt;1-&gt;NULL
+rotate 2 steps to the right: 1-&gt;2-&gt;0-&gt;NULL
+rotate 3 steps to the right: 0-&gt;1-&gt;2-&gt;NULL
+rotate 4 steps to the right: 2-&gt;0-&gt;1-&gt;NULL</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-206-Reverse Linked List]]></title>
+        <id>https://Yoxode.github.io/post/leetcode-206-reverse-linked-list</id>
+        <link href="https://Yoxode.github.io/post/leetcode-206-reverse-linked-list">
+        </link>
+        <updated>2019-03-09T05:16:55.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="206-reverse-linked-list-easy"><a href="https://leetcode.com/problems/reverse-linked-list/">206. Reverse Linked List (Easy)</a></h1>
+<blockquote>
+<p>Reverse a singly linked list.
+Example:
+Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL
+Output: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL
+Follow up:
+A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
+</blockquote>
+<h2 id="1-思路">1. 思路</h2>
+<p><img src="https://Yoxode.github.io/post-images/1552274300466.png" alt="">
+核心步骤：</p>
+<blockquote>
+<p>next = cur.next
+cur.next = pre
+pre = cur
+cur = next</p>
+</blockquote>
+<p><img src="https://Yoxode.github.io/post-images/1552274805449.png" alt=""></p>
+<h2 id="2-代码">2. 代码</h2>
+<pre><code>class Solution(object):
+    def reverseList(self, head):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :rtype: ListNode
+        &quot;&quot;&quot;
+        pre = None
+        cur = head
+        while cur:
+            _next = cur.next
+            cur.next = pre
+            pre = cur
+            cur = _next
+        return pre
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[链表总结（Python）]]></title>
+        <id>https://Yoxode.github.io/post/lian-biao-zong-jie-python</id>
+        <link href="https://Yoxode.github.io/post/lian-biao-zong-jie-python">
+        </link>
+        <updated>2019-03-07T03:17:06.000Z</updated>
+        <summary type="html"><![CDATA[<p>链表的结构以及相关题目</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>链表的结构以及相关题目</p>
+<!-- more -->
+<h1 id="1-链表翻转类">1. 链表翻转类</h1>
+<h2 id="a-206-reverse-linked-list">a. <a href="https://leetcode.com/problems/reverse-linked-list/">206. Reverse Linked List</a></h2>
+<blockquote>
+<p>Reverse a singly linked list.
+Example:
+Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL
+Output: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL
+Follow up:
+A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
+</blockquote>
+<ol>
+<li>思路
+<img src="https://Yoxode.github.io/post-images/1552274300466.png" alt="">
+核心步骤：</li>
+</ol>
+<blockquote>
+<p>next = cur.next
+cur.next = pre
+pre = cur
+cur = next</p>
+</blockquote>
+<p><img src="https://Yoxode.github.io/post-images/1552274805449.png" alt="">
+2. 代码</p>
+<pre><code>class Solution(object):
+    def reverseList(self, head):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :rtype: ListNode
+        &quot;&quot;&quot;
+        pre = None
+        cur = head
+        while cur:
+            _next = cur.next
+            cur.next = pre
+            pre = cur
+            cur = _next
+        return pre
+</code></pre>
+<h2 id="b-92-reverse-linked-list-ii">b. <a href="https://leetcode.com/problems/reverse-linked-list-ii/">92. Reverse Linked List II</a></h2>
+<blockquote>
+<p>Reverse a linked list from position m to n. Do it in one-pass.
+Note: 1 ≤ m ≤ n ≤ length of list.
+Example:
+Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, m = 2, n = 4
+Output: 1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL</p>
+</blockquote>
+<ol>
+<li>思路
+a. 创建dummy节点的目的是让边界情况能像非边界情况一样方便处理。（如果m=1，mnode就是第一个节点，此时如果没有dummy节点那么pre节点就为空。
+b. 通过设定的i递增找到pre节点，m节点，n节点
+<img src="https://Yoxode.github.io/post-images/1552279752422.png" alt="">
+c. 找到相应的节点之后就是整个算法的核心：当mnode和nnode没有重合之前，将mnode移到nnode后面，然后令mnode为之前mnode的下一个节点
+<img src="https://Yoxode.github.io/post-images/1552280532356.png" alt="">
+d. 当mnode和nnode重合时，对应部分的链表就翻转成功了</li>
+<li>代码</li>
+</ol>
+<pre><code>class Solution(object):
+    def reverseBetween(self, head, m, n):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :type m: int
+        :type n: int
+        :rtype: ListNode
+        &quot;&quot;&quot;
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        mnode = head
+        nnode = head
+        pre = dummy
+        i = 1
+        while i &lt;= n:
+            if i &lt; m:
+                mnode = mnode.next
+                pre = pre.next
+            if i &lt; n:
+                nnode = nnode.next
+            i += 1
+        while(mnode != nnode):
+            pre.next = mnode.next
+            mnode.next = nnode.next
+            nnode.next = mnode
+            mnode = pre.next
+            mnode = pre.next
+        return dummy.next
+</code></pre>
+<h2 id="c-61-rotate-list">c. <a href="https://leetcode.com/problems/rotate-list/">61. Rotate List</a></h2>
+<blockquote>
+<p>Given a linked list, rotate the list to the right by k places, where k is non-negative.
+<strong>Example 1:</strong>
+Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, k = 2
+Output: 4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL
+<strong>Explanation:</strong>
+rotate 1 steps to the right: 5-&gt;1-&gt;2-&gt;3-&gt;4-&gt;NULL
+rotate 2 steps to the right: 4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL
+<strong>Example 2:</strong>
+Input: 0-&gt;1-&gt;2-&gt;NULL, k = 4
+Output: 2-&gt;0-&gt;1-&gt;NULL
+<strong>Explanation:</strong>
+rotate 1 steps to the right: 2-&gt;0-&gt;1-&gt;NULL
+rotate 2 steps to the right: 1-&gt;2-&gt;0-&gt;NULL
+rotate 3 steps to the right: 0-&gt;1-&gt;2-&gt;NULL
+rotate 4 steps to the right: 2-&gt;0-&gt;1-&gt;NULL</p>
+</blockquote>
+<ol>
+<li>
+<p>思路
+a. 题目意思是将尾节点翻转到头结点k（k = 2）次
+<img src="https://Yoxode.github.io/post-images/1552352638924.png" alt="">
+b. 如果直接按题意将尾节点翻转到头结点的话，每次需要知道该尾节点的pre节点，但是pre节点无法像next节点一样直接获得，所以这时转变一下思路，将“尾节点翻转到头结点k次”转换为“将头结点翻转到尾节点(n - k)次”（n为链表长度）。
+<img src="https://Yoxode.github.io/post-images/1552352817190.png" alt="">
+c. 将头结点翻转到尾节点的过程：
+<img src="https://Yoxode.github.io/post-images/1552353930430.png" alt=""></p>
+<blockquote>
+<p>head = head.next
+tail.next = cur
+tail = cur
+cur.next = None
+cur = head</p>
+</blockquote>
+<p><img src="https://Yoxode.github.io/post-images/1552353993069.png" alt=""></p>
+</li>
+<li>
+<p>代码</p>
+</li>
+</ol>
+<pre><code>class Solution(object):
+		def rotateRight(self, head, k):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        &quot;&quot;&quot;
+        if not head or not head.next: return head
+        n = 1
+        tail = head
+        while(tail.next):
+						tail = tail.next
+            n += 1
+        print(n)
+        cur = head
+        for i in range(n - (k % n)):
+            head = head.next
+            tail.next = cur
+            tail = cur
+            cur.next = None
+            cur = head
+        return head
+</code></pre>
+<h1 id="2-链表找环floyds-tortoise-and-hare">2. 链表找环(Floyd's Tortoise and Hare)</h1>
+<ol>
+<li>算法
+Floyd算法分为两个不同的阶段。第一个阶段是<strong>判断在链表中是否有环路</strong>，如果不存在就马上返回空，也就不存在第二阶段。第二个阶段就是<strong>找到环路的入口</strong>。
+<img src="https://Yoxode.github.io/post-images/1552362962171.png" alt=""></li>
+<li>第一阶段（确定有环）
+在这里，我们初始化两个指针-快的fast和慢的slow。接下来，fast和fast从同一个节点出发（head节点），slow每次走一个节点，fast每次走两个节点。如果他们在前进若干步后在同一个节点相遇，我们就返回这个节点，如果最终没有返回节点信息，而是返回空，则代表不存在环路。<strong>可以知道只要链表有环，快慢指针终会在某个节点<em>O</em>相遇</strong>。</li>
+<li>第二阶段（找到环的入口）
+第一阶段确定有环了，假设第一阶段slow和fast在<em>O</em>点相遇，非环长部分长度为<em>f</em>，环长为<em>c</em>，换入口距离相遇点距离为<em>a</em>，相遇点距环入口距离为<em>b</em>，设相遇时fast已经走过m圈，slow走过n圈。则此时：</li>
+</ol>
+<blockquote>
+<p>S(slow) = f + m*c + a
+S(fast) = f + n*c + a
+S(fast) = 2*S(slow)
+则：S(slow) = (n - m)*c（即slow走过的距离为环长的整数倍）
+则：f + m*c + a = (n - m)*c
+则：f = (n - 2m)*c - a = (n - 2m - 1)*c + c - a = (n - 2m - 1)*c + b
+则：f % b = 0</p>
+</blockquote>
+<p>意味着当第一次相遇时，让fast在相遇点不动，slow回到起点，二者每次都只走一步，这样当slow走了f到达环入口时，fast也走了f，而<strong>f % b = 0</strong>，意味着fast也到达了环入口，此时二者相遇。</p>
+<h2 id="a-141-linked-list-cycle">a. <a href="https://leetcode.com/problems/linked-list-cycle/">141. Linked List Cycle</a></h2>
+<blockquote>
+<p>Given a linked list, determine if it has a cycle in it.
+To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
+<strong>Example 1:</strong>
+Input: head = [3,2,0,-4], pos = 1
+Output: true
+<strong>Explanation</strong>: There is a cycle in the linked list, where tail connects to the second node.
+<img src="https://Yoxode.github.io/post-images/1552354856942.png" alt="">
+<strong>Example 2:</strong>
+Input: head = [1,2], pos = 0
+Output: true
+<strong>Explanation</strong>: There is a cycle in the linked list, where tail connects to the first node.
+<img src="https://Yoxode.github.io/post-images/1552354887187.png" alt=""></p>
+</blockquote>
+<h3 id="代码">代码</h3>
+<pre><code>class Solution(object):
+    def hasCycle(self, head):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :rtype: bool
+        &quot;&quot;&quot;
+        if not head or not head.next: return False
+        record = {}
+        cur = head
+        while cur:
+            if cur in record: return True
+            else:
+                record[cur] = 1
+                cur = cur.next
+        return False
+</code></pre>
+<h2 id="b-142-linked-list-cycle-ii">b. <a href="https://leetcode.com/problems/linked-list-cycle-ii/">142. Linked List Cycle II</a></h2>
+<blockquote>
+<p>Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
+Note: Do not modify the linked list
+<strong>Example 1:</strong>
+Input: head = [3,2,0,-4], pos = 1
+Output: tail connects to node index 1
+<strong>Explanation</strong>: There is a cycle in the linked list, where tail connects to the second node.
+<img src="https://Yoxode.github.io/post-images/1552363226506.png" alt="">
+<strong>Example 2:</strong>
+Input: head = [1,2], pos = 0
+Output: tail connects to node index 0
+<strong>Explanation</strong>: There is a cycle in the linked list, where tail connects to the first node.
+<img src="https://Yoxode.github.io/post-images/1552363255757.png" alt="">
+<strong>Example 3:</strong>
+Input: head = [1], pos = -1
+Output: no cycle
+<strong>Explanation</strong>: There is no cycle in the linked list.
+<img src="https://Yoxode.github.io/post-images/1552363264919.png" alt=""></p>
+</blockquote>
+<h3 id="代码-2">代码</h3>
+<pre><code>class Solution(object):
+    def detectCycle(self, head):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :rtype: ListNode
+        &quot;&quot;&quot;
+        def isCycle(head):
+            if not head or not head.next: return None
+            slow = head
+            fast = head
+            while fast.next and fast.next.next:
+                fast = fast.next.next
+                slow = slow.next
+                if fast == slow:
+                    return fast
+            return None
+        intersection = isCycle(head)
+        if not intersection: return None
+        p1 = head
+        p2 = intersection
+        while(p1 != p2):
+            p1 = p1.next
+            p2 = p2.next
+        return p1
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[激活函数]]></title>
+        <id>https://Yoxode.github.io/post/ji-huo-han-shu</id>
+        <link href="https://Yoxode.github.io/post/ji-huo-han-shu">
+        </link>
+        <updated>2019-03-04T12:50:27.000Z</updated>
+        <summary type="html"><![CDATA[<p>激活函数总结</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>激活函数总结</p>
+<!-- more -->
+<h1 id="什么是激活函数">什么是激活函数</h1>
+<p>在多层神经网络中，上层节点的输出和下层节点的输入之间具有一个函数关系，这个函数称为激活函数（又称激励函数）。
+<img src="https://Yoxode.github.io/post-images/1551761746556.jpeg" alt=""></p>
+<h1 id="激活函数的用途">激活函数的用途</h1>
+<p>如果不用激励函数（其实<strong>相当于激励函数是f(x) = x</strong>），在这种情况下你每一层节点的输入都是上层输出的<strong>线性函数</strong>。很容易验证，无论你神经网络有多少层，输出都是输入的线性组合，与没有隐藏层效果相当。这种情况就是最原始的<strong>感知机</strong>（Perceptron）了，那么网络的逼近能力就相当有限。正因为上面的原因，我们决定引入非线性函数作为激励函数，这样深层神经网络<strong>表达能力就更加强大</strong>（<strong>不再是输入的线性组合，而是几乎可以逼近任意函数</strong>）。</p>
+<h1 id="常见激活函数总结">常见激活函数总结</h1>
+<h2 id="1-sigmoid">1. Sigmoid</h2>
+<ol>
+<li>函数公式
+<img src="https://Yoxode.github.io/post-images/1551763044179.jpg" alt=""></li>
+<li>函数导数
+<img src="https://Yoxode.github.io/post-images/1551763097642.jpg" alt=""></li>
+<li>函数图像
+<img src="https://Yoxode.github.io/post-images/1551763209036.png" alt=""></li>
+<li>导数图像
+<img src="https://Yoxode.github.io/post-images/1551764383466.png" alt=""></li>
+<li>函数特性</li>
+</ol>
+<ul>
+<li>当变量值远离中心轴时，<strong>梯度几乎为0</strong>，在神经网络的反向传播过程中，链式求导导致经过sigmoid函数之后的梯度很小，容易发生<strong>梯度消失</strong>（梯度弥散），导致权重值更新较慢甚至不更新</li>
+<li>Sigmoid的output<strong>不是0均值（即zero-centered）</strong>。这是不可取的，因为这会导致后一层的神经元将得到上一层输出的非0均值的信号作为输入。 产生的一个结果就是：如x&gt;0，那么对w求局部梯度则都为正，这样在反向传播的过程中w要么都往正方向更新，要么都往负方向更新，导致有一种捆绑的效果，使得<strong>收敛缓慢</strong>。 当然了，如果按batch去训练，那么那个batch可能得到不同的信号，所以这个问题还是可以缓解一下的。因此，非0均值这个问题虽然会产生一些不好的影响，不过跟上面提到的梯度消失问题相比还是要好很多的。</li>
+<li>计算机执行<strong>指数运算</strong>会比较<strong>慢</strong>，对于规模比较大的深度网络，这会较大地增加训练时间</li>
+</ul>
+<h2 id="2-tanh双曲正切函数">2. Tanh（双曲正切函数）</h2>
+<ol>
+<li>函数公式
+<img src="https://Yoxode.github.io/post-images/1551765419585.jpg" alt=""></li>
+<li>函数导数
+<img src="https://Yoxode.github.io/post-images/1551765488263.jpg" alt=""></li>
+<li>函数及导数图像
+<img src="https://Yoxode.github.io/post-images/1551765930353.png" alt=""></li>
+<li>函数特性</li>
+</ol>
+<ul>
+<li>解决了Sigmoid函数的输出非0均值问题，SGD 会更接近 natural gradient（一种二次优化技术），从而降低所需的迭代次数，收敛速度加快</li>
+<li>和Sigmoid一样具有软饱和性，容易发生梯度消失</li>
+</ul>
+<h2 id="3-relu线性整流函数-rectified-linear-unit又称修正线性单元">3. ReLU（线性整流函数-Rectified Linear Unit，又称修正线性单元）</h2>
+<ol>
+<li>函数公式
+<img src="https://Yoxode.github.io/post-images/1551766472584.png" alt=""></li>
+<li>函数及导数图像
+<img src="https://Yoxode.github.io/post-images/1551766508668.png" alt=""></li>
+<li>特性</li>
+</ol>
+<ul>
+<li><strong>解决了梯度消失</strong>（gradient vanishing）问题 (在正区间)</li>
+<li><strong>计算速度非常快</strong>，只需要判断输入是否大于0</li>
+<li><strong>收敛速度远快于</strong>sigmoid和tanh</li>
+<li>ReLU会使一部分神经元的输出为0，这样就造成了网络的稀疏性，并且减少了参数的相互依存关系，缓解了过拟合问题的发生</li>
+<li>ReLU的输出<strong>不是zero-centered</strong></li>
+<li><strong>Dead ReLU Problem</strong>，由于负区间值始终为0，某些神经元可能永远不会被激活，导致相应的参数永远不能被更新，产生原因:
+(1) 非常不幸的参数初始化，这种情况比较少见
+(2) learning rate太<strong>高</strong>导致在训练过程中参数更新太大，不幸使网络进入这种状态
+解决方法是可以采用<strong>Xavier初始化</strong>方法，以及避免将learning rate设置太大或使用adagrad等自动调节learning rate的算法。</li>
+</ul>
+<h5 id="尽管存在这两个问题relu目前仍是最常用的activation-function在搭建人工神经网络的时候推荐优先尝试">尽管存在这两个问题，ReLU目前仍是最常用的activation function，在搭建人工神经网络的时候推荐优先尝试！</h5>
+<h2 id="4-leaky-relu带泄露线性整流-parameter-relu-p-relu">4. Leaky ReLU(带泄露线性整流-Parameter ReLU-P ReLU)</h2>
+<ol>
+<li>函数公式
+<img src="https://Yoxode.github.io/post-images/1551767645519.png" alt=""></li>
+<li>函数及导数图像
+<img src="https://Yoxode.github.io/post-images/1551767660875.png" alt=""></li>
+<li>特性</li>
+</ol>
+<ul>
+<li>人们为了<strong>解决Dead ReLU Problem</strong>，提出了将ReLU的前半段设为αx而非0，通常α=0.01。</li>
+<li>理论上来讲，Leaky ReLU有ReLU的所有优点，外加<strong>不会有Dead ReLu</strong>问题，但是在实际操作当中，<strong>并没有完全证明Leaky ReLU总是好于ReLU</strong>。</li>
+</ul>
+<h2 id="5-eluexponential-linear-units">5. ELU（Exponential Linear Units）</h2>
+<ol>
+<li>函数公式
+<img src="https://Yoxode.github.io/post-images/1551768103327.png" alt=""></li>
+<li>函数及导数图像
+<img src="https://Yoxode.github.io/post-images/1551768130376.png" alt=""></li>
+<li>特性</li>
+</ol>
+<ul>
+<li>ELU也是为解决ReLU存在的问题而提出，显然，ELU<strong>有ReLU的基本所有优点</strong></li>
+<li><strong>不会有Dead ReLU</strong>问题</li>
+<li>输出的均值接近0，<strong>zero-centered</strong></li>
+<li>它的一个小问题在于<strong>计算量稍大</strong>。类似于Leaky ReLU，理论上虽然好于ReLU，<strong>但在实际使用中目前并没有好的证据ELU总是优于ReLU</strong>。</li>
+</ul>
+<h2 id="6-selu缩放指数线性单元-scaled-exponential-linear-units">6. SeLU（缩放指数线性单元-Scaled Exponential Linear Units）</h2>
+<ol>
+<li>函数公式
+<img src="https://Yoxode.github.io/post-images/1551768620298.png" alt="">
+其中α和λ的值是通过证明得到而不是训练得到的
+<strong>α = 1.6732632423543772848170429916717</strong>
+<strong>λ = 1.0507009873554804934193349852946</strong></li>
+<li>函数图像
+<img src="https://Yoxode.github.io/post-images/1551768634779.png" alt=""></li>
+<li>特性</li>
+</ol>
+<ul>
+<li>经过该激活函数后使得样本分布自动归一化到0均值和单位方差</li>
+</ul>
+<h2 id="7-maxout">7. MaxOut</h2>
+<ol>
+<li>函数公式
+<img src="https://Yoxode.github.io/post-images/1551769573481.png" alt=""></li>
+</ol>
+<p>参考：
+<a href="https://blog.csdn.net/tyhj_sf/article/details/79932893">常用激活函数（激励函数）理解与总结</a>
+<a href="https://arxiv.org/pdf/1706.02515.pdf">Self-Normalizing Neural Networks</a>
+<a href="https://arxiv.org/pdf/1302.4389.pdf">Maxout Networks</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[GoogLe Net（Inception 系列）]]></title>
+        <id>https://Yoxode.github.io/post/google-netinception-xi-lie</id>
+        <link href="https://Yoxode.github.io/post/google-netinception-xi-lie">
+        </link>
+        <updated>2019-03-04T02:36:56.000Z</updated>
+        <summary type="html"><![CDATA[<p>Inception V1、V2、V3、V4</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Inception V1、V2、V3、V4</p>
+<!-- more -->
+<h1 id="google-net简介">GoogLe Net简介</h1>
+<p><strong>2014</strong>年，GoogLeNet和VGG是当年ImageNet挑战赛(ILSVRC14)的双雄，GoogLeNet获得了<strong>第一名</strong>、VGG获得了第二名，这两类模型结构的共同特点是<strong>层次更深</strong>了。VGG继承了LeNet以及AlexNet的一些框架结构（详见  大话CNN经典模型：VGGNet），而GoogLeNet则做了更加大胆的网络结构尝试，虽然<strong>深度只有22层</strong>，但大小却比AlexNet和VGG小很多，GoogleNet<strong>参数为500万</strong>个，AlexNet参数个数是GoogleNet的12倍，VGGNet参数又是AlexNet的3倍，因此在内存或计算资源有限时，GoogleNet是比较好的选择；从模型结果来看，GoogLeNet的<strong>性能却更加优越</strong>。</p>
+<h1 id="inception">Inception</h1>
+<p>一般来说，提升网络性能最直接的办法就是<strong>增加网络深度和宽度</strong>，深度指<strong>网络层次数量</strong>、宽度指<strong>神经元数量</strong>。但这种方式存在以下问题：</p>
+<ol>
+<li>参数太多，如果训练数据集有限，很容易产生<strong>过拟合</strong></li>
+<li>网络越大、参数越多，<strong>计算复杂度越大</strong>，难以应用</li>
+<li>网络越深，容易出现<strong>梯度弥散</strong>问题（梯度越往后穿越容易消失），难以优化模型</li>
+</ol>
+<p>解决这些问题的方法当然就是在增加网络深度和宽度的同时减少参数，为了减少参数，自然就想到将全连接变成<strong>稀疏连接</strong>。但是在实现上，全连接变成稀疏连接后实际计算量并不会有质的提升，因为大部分硬件是针对<strong>密集矩阵计算优化</strong>的，稀疏矩阵虽然数据量少，但是计算所消耗的时间却很难减少。</p>
+<p>大量的文献表明可以将稀疏矩阵聚类为较为密集的子矩阵来提高计算性能，就如人类的大脑是可以看做是神经元的重复堆积，因此，<strong>GoogLeNet团队</strong>提出了<strong>Inception</strong>网络结构，就是构造一种“基础神经元”结构，来搭建一个稀疏性、高计算性能的网络结构。</p>
+<h1 id="inception-v1">Inception V1</h1>
+<ol>
+<li>简介
+Inception V1有 <strong>9 个线性堆叠的 Inception 模块</strong>，总共有<strong>22层</strong>（包括池化层的话是27层，最后一个 inception 模块处使用<strong>全局平均池化</strong>），而AlexNet和VGGNet分别为8层和19层，但它的参数量只有<strong>500万</strong>个，而AlexNet却有6000万个，仅为1/12，但是准确率远高于AlexNet。</li>
+<li>背景
+虽然增加神经网络的规模可以提高性能，但有两个缺点：</li>
+</ol>
+<ul>
+<li>参数过多更容易导致过拟合，并且高质量的训练集需要更高的成本。</li>
+<li>增加里计算机资源的使用，网络太大，计算复杂程度大，模型训练也困难。</li>
+</ul>
+<ol start="3">
+<li>Inception模块
+<img src="https://Yoxode.github.io/post-images/1551821658754.png" alt="">
+<strong>图a</strong>是论文中提出的最原始的版本，所有的卷积核都在上一层的所有输出上来做，那5×5的卷积核所需的计算量就太大了，造成了特征图厚度很大。为了避免这一现象提出的inception具有如下结构，在3x3前，5x5前，max pooling后分别加上了1x1的卷积核起到了降低特征图厚度的作用，也就是<strong>图b</strong>中Inception v1的网络结构。</li>
+</ol>
+<ul>
+<li>a. 不同的尺寸的卷积核代表着不同的感受野，卷积核大小采用1×1、3×3、5×5，主要是为了<strong>方便对齐</strong>。设定卷积步长stride=1之后，分别设定pad=0、1、2，卷积之后便可以得到<strong>相同维度</strong>的特征，然后将特征通过<strong>Filter concatenation</strong>直接<strong>拼接</strong>在一起。（打个比方3个10x10x3的图按照深度连接起来就会变成一个10x10x9的图，所以Filter Concatenation就这么简单，把几个图连成一个而已）</li>
+<li>b. 第一个分支对输入进行了1×1卷积，第二个分支先1×1卷积后3×3卷积，第三个先1×1卷积后5×5卷积，第四个先3×3最大池化后1×1卷积，可以发现一个共性，<strong>都进行了1×1的卷积</strong>，这是因为<strong>1×1卷积可以用很小的计算量添加一层特征变换和非线性化，并且采用1×1卷积来进行将维</strong>，例如：上一层的输出为100x100x128，经过具有256个输出的5x5卷积层之后(stride=1，pad=2)，输出数据为100x100x256，卷积层的参数为128x5x5x256。假如上一层输出先经过具有32个输出的1x1卷积层，再经过具有256个输出的5x5卷积层，那么最终的输出数据仍为为100x100x256，但卷积参数量已经减少为128x1x1x32 + 32x5x5x256，大约减少了4倍。所以<strong>用1×1卷积核降维大大减少了参数量，有效减小了计算的复杂程度</strong>。</li>
+</ul>
+<ol start="4">
+<li>结构图
+<img src="https://Yoxode.github.io/post-images/1551821437191.png" alt=""></li>
+<li>参数表
+<img src="https://Yoxode.github.io/post-images/1551821474935.png" alt=""></li>
+<li>结构说明</li>
+</ol>
+<ul>
+<li>Global Average Pooling（全局平均池化）
+最终的卷积层之后采用Global Average Pooling层，而不是全连接层，这有助于<strong>减少参数量</strong>
+<img src="https://Yoxode.github.io/post-images/1551824807166.png" alt=""></li>
+<li>辅助损失
+除了上述所说的，为了阻止该网络中间部分梯度消失过程，作者引入了两个辅助分类器。它们对其中两个 Inception 模块的输出执行 softmax 操作，然后在同样的标签上计算<strong>辅助损失</strong>。总损失即辅助损失和真实损失的加权和。该论文中对每个辅助损失使用的权重值是<strong>0.3</strong>。
+（文中说是为了避免梯度消失问题，也是一种正则化手段。）</li>
+</ul>
+<blockquote>
+<p># The total loss used by the inception net during training.
+total_loss = real_loss + 0.3 * aux_loss_1 + 0.3 * aux_loss_2</p>
+</blockquote>
+<h1 id="inception-v2">Inception V2</h1>
+<ol>
+<li>简介
+<strong>Inception v2</strong> 和 <strong>Inception v3</strong> 来自同一篇论文《<em>Rethinking the Inception Architecture for Computer Vision</em>》，作者提出了一系列能<strong>增加准确度</strong>和<strong>减少计算复杂度</strong>的修正方法。</li>
+<li>改进</li>
+</ol>
+<ul>
+<li>加入了<strong>BN</strong>（Batch Normalization）层，减少了InternalCovariate Shift（内部neuron的数据分布发生变化），使每一层的输出都规范化到一个N(0, 1)的高斯分布，从而增加了模型的鲁棒性，可以以更大的学习速率训练，收敛更快，初始化操作更加随意，同时作为一种正则化技术，可以减少dropout层的使用。</li>
+<li>用2个连续的3×3 conv替代inception模块中的5×5，从而实现网络深度的增加，网络整体深度增加了9层。
+<img src="https://Yoxode.github.io/post-images/1551825909233.jpg" alt=""></li>
+</ul>
+<h1 id="inception-v3">Inception V3</h1>
+<ol>
+<li>简介
+Inception v3网络，主要在v2的基础上，提出了<strong>卷积分解（Factorization）</strong>，代表作是Inceptionv3版本的GoogleNet。</li>
+<li>改进</li>
+</ol>
+<ul>
+<li>将7×7分解成<strong>两个一维的卷积</strong>（1×7,7×1），3×3也是一样（1×3,3×1），这样的好处，既可以<strong>加速计算</strong>（多余的计算能力可以用来加深网络），又可以将1个conv拆成2个conv，使得<strong>网络深度进一步增加</strong>，增加了网络的非线性，更加精细设计了35×35、17×17、8×8的模块。
+<img src="https://Yoxode.github.io/post-images/1551826376435.jpg" alt=""></li>
+<li>增加网络宽度，网络输入从224×224变为了299×299。</li>
+</ul>
+<h1 id="inception-v4-inception-resnet">Inception V4, Inception-ResNet</h1>
+<ol>
+<li>简介
+Inception v4主要利用<strong>残差连接</strong>（<strong>Residual Connection</strong>）来改进v3结构，代表作为，Inception-ResNet-v1，Inception-ResNet-v2，Inception-v4。</li>
+<li>残差结构
+resnet中的残差结构如下，这个结构设计的就很巧妙，简直神来之笔，使用原始层和经过2个卷基层或者3个卷积层的feature map做Eltwise。
+首先介绍几个概念，左边的3×3+3×3(ResNet18，ResNet34)和1×1+3×3+1×1（ResNet50，ResNet101，ResNet152）称为<strong>瓶颈单元</strong>（<strong>bootlenect</strong>，因为输入为256，中间为64，输出为256，宽窄宽的结构，像瓶子的颈部）。右面的直线，有的实现是直线中有1×1卷积，称为<strong>shortcut</strong>。整个bootlenect+shortcut称为<strong>Residual uint</strong>。几个Residual uint的叠加称为<strong>Residual block</strong>。Resnet结构都是由<strong>4个Residual block</strong>组成的。
+Inception-ResNet的改进就是使用上文的Inception module来替换resnet shortcut中的bootlenect。
+<img src="https://Yoxode.github.io/post-images/1551828058494.png" alt=""></li>
+</ol>
+<p>参考：
+<a href="https://zhuanlan.zhihu.com/p/37505777">从Inception v1到Inception-ResNet，一文概览Inception家族的「奋斗史」</a>
+<a href="https://blog.csdn.net/qq_14845119/article/details/73648100">从Inception v1,v2,v3,v4,RexNeXt到Xception再到MobileNets,ShuffleNet,MobileNetV2,ShuffleNetV2</a>
+<a href="https://blog.csdn.net/qq_28132591/article/details/64124491">Filter Concatenation的理解</a>
+<a href="https://my.oschina.net/u/876354/blog/1637819">大话CNN经典模型：GoogLeNet（从Inception v1到v4的演进）</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[VGGNet总结]]></title>
+        <id>https://Yoxode.github.io/post/vggnet-zong-jie</id>
+        <link href="https://Yoxode.github.io/post/vggnet-zong-jie">
+        </link>
+        <updated>2019-03-02T00:08:34.000Z</updated>
+        <summary type="html"><![CDATA[<p>关于VGGNet（VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION）</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>关于VGGNet（VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION）</p>
+<!-- more -->
+<h1 id="vggnet简介">VGGNet简介</h1>
+<p>VGG是<strong>Oxford</strong>的<strong>V</strong>isual <strong>G</strong>eometry <strong>G</strong>roup的组提出的（大家应该能看出VGG名字的由来了）。该网络是在<strong>ILSVRC 2014</strong>上的相关工作，主要工作是证明了<strong>增加网络的深度能够在一定程度上影响网络最终的性能</strong>。VGG有两种结构，分别是<strong>VGG16</strong>和<strong>VGG19</strong>，两者并<strong>没有本质上的区别</strong>，只是<strong>网络深度不一样</strong>。</p>
+<h1 id="vggnet结构">VGGNet结构</h1>
+<p><img src="https://Yoxode.github.io/post-images/1551741930090.png" alt=""></p>
+<ul>
+<li>VGG16包含了16个隐藏层（13个卷积层和3个全连接层），如上图中的D列所示</li>
+<li>VGG19包含了19个隐藏层（16个卷积层和3个全连接层），如上图中的E列所示</li>
+<li>VGG网络的结构非常一致，从头到尾全部使用的是<strong>3x3</strong>的<strong>卷积</strong>和<strong>2x2</strong>的<strong>max pooling</strong>。
+这里可以看到形象化的<a href="https://dgschwend.github.io/netscope/#/preset/vgg-16">VGG16</a></li>
+</ul>
+<h1 id="vggnet相比alexnet">VGGNet相比AlexNet</h1>
+<p><img src="https://Yoxode.github.io/post-images/1551751759712.png" alt=""></p>
+<h2 id="1-vgg16相比alexnet的一个改进是采用连续的几个3x3的卷积核代替alexnet中的较大卷积核11x117x75x5">1. VGG16相比AlexNet的一个改进是采用连续的几个3x3的卷积核代替AlexNet中的较大卷积核（11x11，7x7，5x5）</h2>
+<p>例如两个3x3代替5x5:
+<img src="https://Yoxode.github.io/post-images/1551751468450.png" alt=""></p>
+<h3 id="原因">原因：</h3>
+<ol>
+<li>在<strong>不改变网络功能的前提下</strong>极大地<strong>减少了参数个数</strong>。对于一层7X7的深度为1的卷积层变量总数为7X7=49，而对于三层3X3D的深度为1的卷积层变量总数仅仅为3X(3X3)=27，<strong>减少了近一半的参数量</strong>。</li>
+<li>采用<strong>更深</strong>的小卷积层将会在网络中加入更多的非线性激活函数ReLU，使<strong>模型的表示能力更强</strong>。</li>
+</ol>
+<h2 id="2-vggnet放弃了lrn层">2. VGGNet放弃了LRN层</h2>
+<h1 id="vggnet的优缺点">VGGNet的优缺点</h1>
+<h2 id="优点">优点：</h2>
+<ul>
+<li>VGGNet的结构非常简洁，整个网络都使用了同样大小的卷积核尺寸（3x3）和最大池化尺寸（2x2）</li>
+<li>几个小滤波器（3x3）卷积层的组合比一个大滤波器（5x5或7x7）卷积层好</li>
+<li>验证了通过不断加深网络结构可以提升性能</li>
+</ul>
+<h2 id="缺点">缺点：</h2>
+<ul>
+<li>VGG耗费更多计算资源，并且使用了更多的参数（这里不是3x3卷积的锅），导致更多的内存占用（140M）。其中绝大多数的参数都是来自于第一个全连接层。VGG可是有3个全连接层啊！</li>
+</ul>
+<p><a href="https://arxiv.org/pdf/1409.1556.pdf">VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION</a>
+<a href="https://zhuanlan.zhihu.com/p/41423739">一文读懂VGG网络</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[AlexNet总结]]></title>
+        <id>https://Yoxode.github.io/post/alexnet-zong-jie</id>
+        <link href="https://Yoxode.github.io/post/alexnet-zong-jie">
+        </link>
+        <updated>2019-02-18T23:56:02.000Z</updated>
+        <summary type="html"><![CDATA[<p>关于AlexNet</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>关于AlexNet</p>
+<!-- more -->
+<h1 id="alexnet-简要介绍">AlexNet 简要介绍</h1>
+<p>AlexNet由<strong>Alex Krizhevsky</strong>于<strong>2012</strong>年提出，夺得2012年<strong>ILSVRC比赛的冠军</strong>，top5预测的错误率为<strong>16.4%</strong>，远超第一名。AlexNet采用8层的神经网络，<strong>5个卷积层</strong>和<strong>3个全连接层</strong>(3个卷积层后面加了最大池化层)，包含6亿3000万个链接，6000万个 参数和65万个神经元。</p>
+<h1 id="alexnet模型结构">AlexNet模型结构</h1>
+<p>论文中的模型图：
+<img src="https://Yoxode.github.io/post-images/1551647686153.jpg" alt="">
+这里论文模型图有一个错误，就是AlexNet的输入层实际上是227*227的，但是图片里面是224*224的。我们看下面一张图，会更加清晰一点：
+<img src="https://Yoxode.github.io/post-images/1551647907609.jpeg" alt="">
+卷积层参数量（池化层参数为0）：
+<img src="https://Yoxode.github.io/post-images/1551648480484.jpeg" alt="">
+全连接层参数量：
+<img src="https://Yoxode.github.io/post-images/1551648519198.jpeg" alt=""></p>
+<h1 id="alexnet相比传统cnn如lenet的创新点">AlexNet相比传统CNN（如LeNet）的创新点</h1>
+<h2 id="1-data-augmentation数据增强">1. Data Augmentation（数据增强）</h2>
+<p>常见的数据增强方法有：</p>
+<ul>
+<li>水平翻转：
+<img src="https://Yoxode.github.io/post-images/1551650681749.png" alt=""></li>
+<li>随机裁剪、平移变换
+<img src="https://Yoxode.github.io/post-images/1551650711663.png" alt=""></li>
+<li>颜色、光照变换
+<img src="https://Yoxode.github.io/post-images/1551650734615.png" alt=""></li>
+</ul>
+<h2 id="2-使用relu非线性激活函数">2. 使用ReLu非线性激活函数</h2>
+<p>ReLu 函数公式：<em>f(x) = max(0, x)</em>
+ReLu 函数图形：
+<img src="https://Yoxode.github.io/post-images/1551651017993.png" alt=""></p>
+<p><strong>用ReLU函数代替了传统的Tanh或者Sigmoid函数。好处有：</strong></p>
+<ul>
+<li>计算速度快。ReLu前向计算非常简单，无需指数类的操作；ReLu的反向传播计算（偏导）也很简单。</li>
+<li>不容易发生梯度消失（梯度弥散）问题。Tanh和Sigmoid激活函数在两端的时候导数接近于0，多级连乘后梯度趋近于0，会导致梯度消失，而ReLu防止了这个问题，因此可以训练更深的网络。</li>
+<li>稀疏性。ReLu函数在输入小于0的时候是处于不激活状态的，从而使一部分隐藏层的输出为0，于是网络变得更加稀疏，起到了类似于L1正则化的作用，在一定程度上防止了过拟合。</li>
+</ul>
+<h2 id="3-dropout只在最后几个全连接层做">3. Dropout（只在最后几个全连接层做）</h2>
+<p><img src="https://Yoxode.github.io/post-images/1551651730077.gif" alt=""></p>
+<p><strong>为什么Dropout有效？</strong></p>
+<p>Dropout背后理念和集成模型很相似。在Drpout层，不同的神经元组合被关闭，这代表了一种不同的结构，所有这些不同的结构使用一个的子数据集并行地带权重训练，而权重总和为1。如果Dropout层有n个神经元，那么会形成 2^{n} 个不同的子结构。在预测时，相当于集成这些模型并取均值。这种结构化的模型正则化技术有利于避免过拟合。Dropout有效的另外一个视点是：由于神经元是随机选择的，所以可以减少神经元之间的相互依赖，从而确保提取出相互独立的重要特征。</p>
+<h2 id="4-overlapping-pooling重叠池化">4. Overlapping Pooling（重叠池化）</h2>
+<p>根据模型图可以看到，在第一、二、五个卷积层后都有一个Overlapping的MaxPool层。
+Overlapping指重叠，即Pooling的步长比Pooling Kernel的对应边要小（比如这里池化层的size为3，而步长为2）。
+这个策略贡献了0.3%的Top-5错误率。</p>
+<h2 id="5-多gpu并行">5. 多GPU并行</h2>
+<p>原论文中将输入分为两部分在两个GPU上并行</p>
+<h2 id="6-local-response-normalization局部响应归一化">6. Local Response Normalization（局部响应归一化）</h2>
+<p><img src="https://Yoxode.github.io/post-images/1551653920708.png" alt="">
+(在2015年 Very Deep Convolutional Networks for Large-Scale Image Recognition.提到LRN基本没什么用)</p>
+<p>参考文章：
+<a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">ImageNet Classification with Deep Convolutional Neural Networks</a>
+<a href="https://blog.csdn.net/haluoluo211/article/details/81636890">Alexnet总结/论文笔记</a>
+<a href="https://zhuanlan.zhihu.com/p/22094600">[原创]#Deep Learning回顾#之LeNet、AlexNet、GoogLeNet、VGG、ResNet</a></p>
+]]></content>
+    </entry>
+</feed>

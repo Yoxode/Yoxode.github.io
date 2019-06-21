@@ -62,126 +62,200 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-03-06 ·
+                · 2019-03-07 ·
               </time>
               
             </div>
             <div class="post-content">
               <p>链表的结构以及相关题目</p>
 <!-- more -->
-<h1 id="1. 链表翻转类">1. 链表翻转类</h1><h2 id="a. 206. reverse linked list">a. <a href="https://leetcode.com/problems/reverse-linked-list/">206. Reverse Linked List</a></h2><blockquote>
-<p>Reverse a singly linked list.<br>Example:<br>Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL<br>Output: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL<br>Follow up:<br>A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
-</blockquote>
-<ol>
-<li>思路<br><img src="https://Yoxode.github.io/post-images/1552274300466.png" alt=""><br>核心步骤：<blockquote>
-<p>next = cur.next<br>cur.next = pre<br>pre = cur<br>cur = next</p>
-</blockquote>
-</li>
-</ol>
-<p><img src="https://Yoxode.github.io/post-images/1552274805449.png" alt=""></p>
-<ol start="2">
-<li>代码<pre><code>class Solution(object):
- def reverseList(self, head):
-     &quot;&quot;&quot;
-     :type head: ListNode
-     :rtype: ListNode
-     &quot;&quot;&quot;
-     pre = None
-     cur = head
-     while cur:
-         _next = cur.next
-         cur.next = pre
-         pre = cur
-         cur = _next
-     return pre</code></pre></li>
-</ol>
-<h2 id="b. 92. reverse linked list ii">b. <a href="https://leetcode.com/problems/reverse-linked-list-ii/">92. Reverse Linked List II</a></h2><blockquote>
-<p>Reverse a linked list from position m to n. Do it in one-pass.<br>Note: 1 ≤ m ≤ n ≤ length of list.<br>Example:<br>Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, m = 2, n = 4<br>Output: 1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL</p>
-</blockquote>
-<ol>
-<li>思路<br>a. 创建dummy节点的目的是让边界情况能像非边界情况一样方便处理。（如果m=1，mnode就是第一个节点，此时如果没有dummy节点那么pre节点就为空。<br> b. 通过设定的i递增找到pre节点，m节点，n节点<br><img src="https://Yoxode.github.io/post-images/1552279752422.png" alt=""><br>c. 找到相应的节点之后就是整个算法的核心：当mnode和nnode没有重合之前，将mnode移到nnode后面，然后令mnode为之前mnode的下一个节点<br><img src="https://Yoxode.github.io/post-images/1552280532356.png" alt=""><br>d. 当mnode和nnode重合时，对应部分的链表就翻转成功了</li>
-<li>代码<pre><code>class Solution(object):
- def reverseBetween(self, head, m, n):
-     &quot;&quot;&quot;
-     :type head: ListNode
-     :type m: int
-     :type n: int
-     :rtype: ListNode
-     &quot;&quot;&quot;
-     if not head or not head.next:
-         return head
-     dummy = ListNode(0)
-     dummy.next = head
-     mnode = head
-     nnode = head
-     pre = dummy
-     i = 1
-     while i &lt;= n:
-         if i &lt; m:
-             mnode = mnode.next
-             pre = pre.next
-         if i &lt; n:
-             nnode = nnode.next
-         i += 1
-     while(mnode != nnode):
-         pre.next = mnode.next
-         mnode.next = nnode.next
-         nnode.next = mnode
-         mnode = pre.next
-         mnode = pre.next
-     return dummy.next</code></pre></li>
-</ol>
-<h2 id="c. 61. rotate list">c. <a href="https://leetcode.com/problems/rotate-list/">61. Rotate List</a></h2><blockquote>
-<p>Given a linked list, rotate the list to the right by k places, where k is non-negative.<br><strong>Example 1:</strong><br>Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, k = 2<br>Output: 4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL<br><strong>Explanation:</strong><br>rotate 1 steps to the right: 5-&gt;1-&gt;2-&gt;3-&gt;4-&gt;NULL<br>rotate 2 steps to the right: 4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL<br><strong>Example 2:</strong><br>Input: 0-&gt;1-&gt;2-&gt;NULL, k = 4<br>Output: 2-&gt;0-&gt;1-&gt;NULL<br><strong>Explanation:</strong><br>rotate 1 steps to the right: 2-&gt;0-&gt;1-&gt;NULL<br>rotate 2 steps to the right: 1-&gt;2-&gt;0-&gt;NULL<br>rotate 3 steps to the right: 0-&gt;1-&gt;2-&gt;NULL<br>rotate 4 steps to the right: 2-&gt;0-&gt;1-&gt;NULL</p>
-</blockquote>
-<ol>
-<li><p>思路<br>a. 题目意思是将尾节点翻转到头结点k（k = 2）次<br><img src="https://Yoxode.github.io/post-images/1552352638924.png" alt=""><br>b. 如果直接按题意将尾节点翻转到头结点的话，每次需要知道该尾节点的pre节点，但是pre节点无法像next节点一样直接获得，所以这时转变一下思路，将“尾节点翻转到头结点k次”转换为“将头结点翻转到尾节点(n - k)次”（n为链表长度）。<br><img src="https://Yoxode.github.io/post-images/1552352817190.png" alt=""><br>c. 将头结点翻转到尾节点的过程：<br><img src="https://Yoxode.github.io/post-images/1552353930430.png" alt=""></p>
+<h1 id="1-链表翻转类">1. 链表翻转类</h1>
+<h2 id="a-206-reverse-linked-list">a. <a href="https://leetcode.com/problems/reverse-linked-list/">206. Reverse Linked List</a></h2>
 <blockquote>
-<pre><code>head = head.next
+<p>Reverse a singly linked list.
+Example:
+Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL
+Output: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL
+Follow up:
+A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
+</blockquote>
+<ol>
+<li>思路
+<img src="https://Yoxode.github.io/post-images/1552274300466.png" alt="">
+核心步骤：</li>
+</ol>
+<blockquote>
+<p>next = cur.next
+cur.next = pre
+pre = cur
+cur = next</p>
+</blockquote>
+<p><img src="https://Yoxode.github.io/post-images/1552274805449.png" alt="">
+2. 代码</p>
+<pre><code>class Solution(object):
+    def reverseList(self, head):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :rtype: ListNode
+        &quot;&quot;&quot;
+        pre = None
+        cur = head
+        while cur:
+            _next = cur.next
+            cur.next = pre
+            pre = cur
+            cur = _next
+        return pre
+</code></pre>
+<h2 id="b-92-reverse-linked-list-ii">b. <a href="https://leetcode.com/problems/reverse-linked-list-ii/">92. Reverse Linked List II</a></h2>
+<blockquote>
+<p>Reverse a linked list from position m to n. Do it in one-pass.
+Note: 1 ≤ m ≤ n ≤ length of list.
+Example:
+Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, m = 2, n = 4
+Output: 1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL</p>
+</blockquote>
+<ol>
+<li>思路
+a. 创建dummy节点的目的是让边界情况能像非边界情况一样方便处理。（如果m=1，mnode就是第一个节点，此时如果没有dummy节点那么pre节点就为空。
+b. 通过设定的i递增找到pre节点，m节点，n节点
+<img src="https://Yoxode.github.io/post-images/1552279752422.png" alt="">
+c. 找到相应的节点之后就是整个算法的核心：当mnode和nnode没有重合之前，将mnode移到nnode后面，然后令mnode为之前mnode的下一个节点
+<img src="https://Yoxode.github.io/post-images/1552280532356.png" alt="">
+d. 当mnode和nnode重合时，对应部分的链表就翻转成功了</li>
+<li>代码</li>
+</ol>
+<pre><code>class Solution(object):
+    def reverseBetween(self, head, m, n):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :type m: int
+        :type n: int
+        :rtype: ListNode
+        &quot;&quot;&quot;
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        mnode = head
+        nnode = head
+        pre = dummy
+        i = 1
+        while i &lt;= n:
+            if i &lt; m:
+                mnode = mnode.next
+                pre = pre.next
+            if i &lt; n:
+                nnode = nnode.next
+            i += 1
+        while(mnode != nnode):
+            pre.next = mnode.next
+            mnode.next = nnode.next
+            nnode.next = mnode
+            mnode = pre.next
+            mnode = pre.next
+        return dummy.next
+</code></pre>
+<h2 id="c-61-rotate-list">c. <a href="https://leetcode.com/problems/rotate-list/">61. Rotate List</a></h2>
+<blockquote>
+<p>Given a linked list, rotate the list to the right by k places, where k is non-negative.
+<strong>Example 1:</strong>
+Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL, k = 2
+Output: 4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL
+<strong>Explanation:</strong>
+rotate 1 steps to the right: 5-&gt;1-&gt;2-&gt;3-&gt;4-&gt;NULL
+rotate 2 steps to the right: 4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL
+<strong>Example 2:</strong>
+Input: 0-&gt;1-&gt;2-&gt;NULL, k = 4
+Output: 2-&gt;0-&gt;1-&gt;NULL
+<strong>Explanation:</strong>
+rotate 1 steps to the right: 2-&gt;0-&gt;1-&gt;NULL
+rotate 2 steps to the right: 1-&gt;2-&gt;0-&gt;NULL
+rotate 3 steps to the right: 0-&gt;1-&gt;2-&gt;NULL
+rotate 4 steps to the right: 2-&gt;0-&gt;1-&gt;NULL</p>
+</blockquote>
+<ol>
+<li>
+<p>思路
+a. 题目意思是将尾节点翻转到头结点k（k = 2）次
+<img src="https://Yoxode.github.io/post-images/1552352638924.png" alt="">
+b. 如果直接按题意将尾节点翻转到头结点的话，每次需要知道该尾节点的pre节点，但是pre节点无法像next节点一样直接获得，所以这时转变一下思路，将“尾节点翻转到头结点k次”转换为“将头结点翻转到尾节点(n - k)次”（n为链表长度）。
+<img src="https://Yoxode.github.io/post-images/1552352817190.png" alt="">
+c. 将头结点翻转到尾节点的过程：
+<img src="https://Yoxode.github.io/post-images/1552353930430.png" alt=""></p>
+<blockquote>
+<p>head = head.next
 tail.next = cur
 tail = cur
 cur.next = None
-cur = head</code></pre></blockquote>
+cur = head</p>
+</blockquote>
 <p><img src="https://Yoxode.github.io/post-images/1552353993069.png" alt=""></p>
-<ol start="2">
-<li>代码<pre><code>class Solution(object):
- def rotateRight(self, head, k):
- &quot;&quot;&quot;
- :type head: ListNode
- :type k: int
- :rtype: ListNode
- &quot;&quot;&quot;
- if not head or not head.next: return head
- n = 1
- tail = head
- while(tail.next):
-                 tail = tail.next
-     n += 1
- print(n)
- cur = head
- for i in range(n - (k % n)):
-     head = head.next
-     tail.next = cur
-     tail = cur
-     cur.next = None
-     cur = head
- return head</code></pre></li>
-</ol>
+</li>
+<li>
+<p>代码</p>
 </li>
 </ol>
-<h1 id="2. 链表找环(floyd's tortoise and hare)">2. 链表找环(Floyd&#39;s Tortoise and Hare)</h1><ol>
-<li>算法<br>Floyd算法分为两个不同的阶段。第一个阶段是<strong>判断在链表中是否有环路</strong>，如果不存在就马上返回空，也就不存在第二阶段。第二个阶段就是<strong>找到环路的入口</strong>。<br><img src="https://Yoxode.github.io/post-images/1552362962171.png" alt=""></li>
-<li>第一阶段（确定有环）<br>在这里，我们初始化两个指针-快的fast和慢的slow。接下来，fast和fast从同一个节点出发（head节点），slow每次走一个节点，fast每次走两个节点。如果他们在前进若干步后在同一个节点相遇，我们就返回这个节点，如果最终没有返回节点信息，而是返回空，则代表不存在环路。<strong>可以知道只要链表有环，快慢指针终会在某个节点<em>O</em>相遇</strong>。</li>
-<li>第二阶段（找到环的入口）<br>第一阶段确定有环了，假设第一阶段slow和fast在<em>O</em>点相遇，非环长部分长度为<em>f</em>，环长为<em>c</em>，换入口距离相遇点距离为<em>a</em>，相遇点距环入口距离为<em>b</em>，设相遇时fast已经走过m圈，slow走过n圈。则此时：<blockquote>
-<p>S(slow) = f + m*c + a<br>S(fast) = f + n*c + a<br>S(fast) = 2*S(slow)<br>则：S(slow) = (n - m)*c（即slow走过的距离为环长的整数倍）<br>则：f + m*c + a = (n - m)*c<br>则：f = (n - 2m)*c - a = (n - 2m - 1)*c + c - a = (n - 2m - 1)*c + b<br>则：f % b = 0</p>
+<pre><code>class Solution(object):
+		def rotateRight(self, head, k):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        &quot;&quot;&quot;
+        if not head or not head.next: return head
+        n = 1
+        tail = head
+        while(tail.next):
+						tail = tail.next
+            n += 1
+        print(n)
+        cur = head
+        for i in range(n - (k % n)):
+            head = head.next
+            tail.next = cur
+            tail = cur
+            cur.next = None
+            cur = head
+        return head
+</code></pre>
+<h1 id="2-链表找环floyds-tortoise-and-hare">2. 链表找环(Floyd's Tortoise and Hare)</h1>
+<ol>
+<li>算法
+Floyd算法分为两个不同的阶段。第一个阶段是<strong>判断在链表中是否有环路</strong>，如果不存在就马上返回空，也就不存在第二阶段。第二个阶段就是<strong>找到环路的入口</strong>。
+<img src="https://Yoxode.github.io/post-images/1552362962171.png" alt=""></li>
+<li>第一阶段（确定有环）
+在这里，我们初始化两个指针-快的fast和慢的slow。接下来，fast和fast从同一个节点出发（head节点），slow每次走一个节点，fast每次走两个节点。如果他们在前进若干步后在同一个节点相遇，我们就返回这个节点，如果最终没有返回节点信息，而是返回空，则代表不存在环路。<strong>可以知道只要链表有环，快慢指针终会在某个节点<em>O</em>相遇</strong>。</li>
+<li>第二阶段（找到环的入口）
+第一阶段确定有环了，假设第一阶段slow和fast在<em>O</em>点相遇，非环长部分长度为<em>f</em>，环长为<em>c</em>，换入口距离相遇点距离为<em>a</em>，相遇点距环入口距离为<em>b</em>，设相遇时fast已经走过m圈，slow走过n圈。则此时：</li>
+</ol>
+<blockquote>
+<p>S(slow) = f + m*c + a
+S(fast) = f + n*c + a
+S(fast) = 2*S(slow)
+则：S(slow) = (n - m)*c（即slow走过的距离为环长的整数倍）
+则：f + m*c + a = (n - m)*c
+则：f = (n - 2m)*c - a = (n - 2m - 1)*c + c - a = (n - 2m - 1)*c + b
+则：f % b = 0</p>
 </blockquote>
-</li>
-</ol>
 <p>意味着当第一次相遇时，让fast在相遇点不动，slow回到起点，二者每次都只走一步，这样当slow走了f到达环入口时，fast也走了f，而<strong>f % b = 0</strong>，意味着fast也到达了环入口，此时二者相遇。</p>
-<h2 id="a. 141. linked list cycle">a. <a href="https://leetcode.com/problems/linked-list-cycle/">141. Linked List Cycle</a></h2><blockquote>
-<p>Given a linked list, determine if it has a cycle in it.<br>To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.<br><strong>Example 1:</strong><br>Input: head = [3,2,0,-4], pos = 1<br>Output: true<br><strong>Explanation</strong>: There is a cycle in the linked list, where tail connects to the second node.<br><img src="https://Yoxode.github.io/post-images/1552354856942.png" alt=""><br><strong>Example 2:</strong><br>Input: head = [1,2], pos = 0<br>Output: true<br><strong>Explanation</strong>: There is a cycle in the linked list, where tail connects to the first node.<br><img src="https://Yoxode.github.io/post-images/1552354887187.png" alt=""></p>
+<h2 id="a-141-linked-list-cycle">a. <a href="https://leetcode.com/problems/linked-list-cycle/">141. Linked List Cycle</a></h2>
+<blockquote>
+<p>Given a linked list, determine if it has a cycle in it.
+To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
+<strong>Example 1:</strong>
+Input: head = [3,2,0,-4], pos = 1
+Output: true
+<strong>Explanation</strong>: There is a cycle in the linked list, where tail connects to the second node.
+<img src="https://Yoxode.github.io/post-images/1552354856942.png" alt="">
+<strong>Example 2:</strong>
+Input: head = [1,2], pos = 0
+Output: true
+<strong>Explanation</strong>: There is a cycle in the linked list, where tail connects to the first node.
+<img src="https://Yoxode.github.io/post-images/1552354887187.png" alt=""></p>
 </blockquote>
-<h3 id="代码">代码</h3><pre><code>class Solution(object):
+<h3 id="代码">代码</h3>
+<pre><code>class Solution(object):
     def hasCycle(self, head):
         &quot;&quot;&quot;
         :type head: ListNode
@@ -195,10 +269,31 @@ cur = head</code></pre></blockquote>
             else:
                 record[cur] = 1
                 cur = cur.next
-        return False</code></pre><h2 id="b. 142. linked list cycle ii">b. <a href="https://leetcode.com/problems/linked-list-cycle-ii/">142. Linked List Cycle II</a></h2><blockquote>
-<p>Given a linked list, return the node where the cycle begins. If there is no cycle, return null.<br>To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.<br>Note: Do not modify the linked list<br><strong>Example 1:</strong><br>Input: head = [3,2,0,-4], pos = 1<br>Output: tail connects to node index 1<br><strong>Explanation</strong>: There is a cycle in the linked list, where tail connects to the second node.<br><img src="https://Yoxode.github.io/post-images/1552363226506.png" alt=""><br><strong>Example 2:</strong><br>Input: head = [1,2], pos = 0<br>Output: tail connects to node index 0<br><strong>Explanation</strong>: There is a cycle in the linked list, where tail connects to the first node.<br><img src="https://Yoxode.github.io/post-images/1552363255757.png" alt=""><br><strong>Example 3:</strong><br>Input: head = [1], pos = -1<br>Output: no cycle<br><strong>Explanation</strong>: There is no cycle in the linked list.<br><img src="https://Yoxode.github.io/post-images/1552363264919.png" alt=""></p>
+        return False
+</code></pre>
+<h2 id="b-142-linked-list-cycle-ii">b. <a href="https://leetcode.com/problems/linked-list-cycle-ii/">142. Linked List Cycle II</a></h2>
+<blockquote>
+<p>Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
+Note: Do not modify the linked list
+<strong>Example 1:</strong>
+Input: head = [3,2,0,-4], pos = 1
+Output: tail connects to node index 1
+<strong>Explanation</strong>: There is a cycle in the linked list, where tail connects to the second node.
+<img src="https://Yoxode.github.io/post-images/1552363226506.png" alt="">
+<strong>Example 2:</strong>
+Input: head = [1,2], pos = 0
+Output: tail connects to node index 0
+<strong>Explanation</strong>: There is a cycle in the linked list, where tail connects to the first node.
+<img src="https://Yoxode.github.io/post-images/1552363255757.png" alt="">
+<strong>Example 3:</strong>
+Input: head = [1], pos = -1
+Output: no cycle
+<strong>Explanation</strong>: There is no cycle in the linked list.
+<img src="https://Yoxode.github.io/post-images/1552363264919.png" alt=""></p>
 </blockquote>
-<h3 id="代码">代码</h3><pre><code>class Solution(object):
+<h3 id="代码-2">代码</h3>
+<pre><code>class Solution(object):
     def detectCycle(self, head):
         &quot;&quot;&quot;
         :type head: ListNode
@@ -221,7 +316,9 @@ cur = head</code></pre></blockquote>
         while(p1 != p2):
             p1 = p1.next
             p2 = p2.next
-        return p1</code></pre>
+        return p1
+</code></pre>
+
             </div>
           </article>
         </div>
